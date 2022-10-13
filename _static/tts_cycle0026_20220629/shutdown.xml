@@ -1,0 +1,2002 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.8.13 on linux)" generated="20220701 16:25:12.541" rpa="false" schemaversion="3">
+<suite id="s1" name="Shutdown">
+<suite id="s1-s1" name="Verify ATCS Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_ATCS_Shutdown.robot">
+<kw name="Log Many" library="BuiltIn" type="SETUP">
+<arg>${STATES}[offline]</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220701 16:25:13.412" level="TRACE">Arguments: [ '${STATES}[offline]' ]</msg>
+<msg timestamp="20220701 16:25:13.412" level="INFO">4</msg>
+<msg timestamp="20220701 16:25:13.412" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:13.411" endtime="20220701 16:25:13.412"/>
+</kw>
+<test id="s1-s1-t1" name="Verify ATAOS Shutdown" line="17">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATAOS</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:13.414" level="TRACE">Arguments: [ 'ATAOS' ]</msg>
+<msg timestamp="20220701 16:25:13.415" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:13.773" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:13.777" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:14.078" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:14.081" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:14.224" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:14.226" level="DEBUG">Using selector: EpollSelector</msg>
+<msg timestamp="20220701 16:25:14.369" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATAOS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:14.381" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.011888+00:00 2022-07-01 16:19:08.011888384+00:00             4
+2022-07-01 16:18:31.006671+00:00 2022-07-01 16:19:08.006671104+00:00             5
+2022-07-01 16:18:31.003194+00:00 2022-07-01 16:19:08.003194624+00:00             1
+2022-07-01 15:44:02.682783+00:00 2022-07-01 15:44:39.682783744+00:00             2</msg>
+<msg timestamp="20220701 16:25:14.381" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:14.381" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:13.414" endtime="20220701 16:25:14.382"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATAOS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:14.382" level="TRACE">Arguments: [ 'ATAOS' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:14.384" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:14.679" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:14.682" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:14.969" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:14.972" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:15.102" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:15.237" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATAOS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:15.241" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:15.518" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:15.521" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:15.798" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:15.802" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:15.941" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:16.100" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATAOS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:16.104" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.011888384+00:00.</msg>
+<msg timestamp="20220701 16:25:16.104" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002198272+00:00.</msg>
+<msg timestamp="20220701 16:25:16.104" level="TRACE">The time difference is 0.00969 seconds.</msg>
+<msg timestamp="20220701 16:25:16.104" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:14.382" endtime="20220701 16:25:16.104"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:13.413" endtime="20220701 16:25:16.105"/>
+</test>
+<test id="s1-s1-t2" name="Verify ATDome Shutdown" line="22">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATDome</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:16.107" level="TRACE">Arguments: [ 'ATDome' ]</msg>
+<msg timestamp="20220701 16:25:16.108" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:16.399" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:16.404" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:16.685" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:16.688" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:16.822" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:16.953" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATDome.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:16.961" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.015212+00:00 2022-07-01 16:19:08.015212800+00:00             4
+2022-07-01 16:18:31.010204+00:00 2022-07-01 16:19:08.010204672+00:00             5
+2022-07-01 16:18:31.005500+00:00 2022-07-01 16:19:08.005500416+00:00             1
+2022-07-01 15:44:02.677214+00:00 2022-07-01 15:44:39.677213952+00:00             2</msg>
+<msg timestamp="20220701 16:25:16.961" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:16.961" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:16.107" endtime="20220701 16:25:16.961"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATDome</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:16.964" level="TRACE">Arguments: [ 'ATDome' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:16.965" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:17.241" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:17.244" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:17.521" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:17.523" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:17.658" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:17.792" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATDome.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:17.797" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:18.089" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:18.092" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:18.382" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:18.387" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:18.519" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:18.656" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATDome.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:18.659" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.015212800+00:00.</msg>
+<msg timestamp="20220701 16:25:18.659" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002518528+00:00.</msg>
+<msg timestamp="20220701 16:25:18.659" level="TRACE">The time difference is 0.012694 seconds.</msg>
+<msg timestamp="20220701 16:25:18.659" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:16.963" endtime="20220701 16:25:18.659"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:16.106" endtime="20220701 16:25:18.660"/>
+</test>
+<test id="s1-s1-t3" name="Verify ATDomeTrajectory Shutdown" line="27">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATDomeTrajectory</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:18.662" level="TRACE">Arguments: [ 'ATDomeTrajectory' ]</msg>
+<msg timestamp="20220701 16:25:18.663" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:18.944" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:18.947" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:19.235" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:19.238" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:19.379" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:19.511" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATDomeTrajectory.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:19.521" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.013742+00:00 2022-07-01 16:19:08.013742080+00:00             4
+2022-07-01 16:18:31.008490+00:00 2022-07-01 16:19:08.008490752+00:00             5
+2022-07-01 16:18:31.003483+00:00 2022-07-01 16:19:08.003483648+00:00             1
+2022-07-01 15:44:02.674083+00:00 2022-07-01 15:44:39.674083584+00:00             2</msg>
+<msg timestamp="20220701 16:25:19.521" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:19.521" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:18.662" endtime="20220701 16:25:19.521"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATDomeTrajectory</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:19.523" level="TRACE">Arguments: [ 'ATDomeTrajectory' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:19.524" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:19.810" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:19.814" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:20.103" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:20.106" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:20.237" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:20.377" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATDomeTrajectory.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:20.382" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:20.680" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:20.684" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:20.968" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:20.970" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:21.110" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:21.317" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATDomeTrajectory.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:21.321" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.013742080+00:00.</msg>
+<msg timestamp="20220701 16:25:21.321" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002616832+00:00.</msg>
+<msg timestamp="20220701 16:25:21.321" level="TRACE">The time difference is 0.011125 seconds.</msg>
+<msg timestamp="20220701 16:25:21.321" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:19.522" endtime="20220701 16:25:21.321"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:18.661" endtime="20220701 16:25:21.327"/>
+</test>
+<test id="s1-s1-t4" name="Verify ATHexapod Shutdown" line="32">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATHexapod</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:21.330" level="TRACE">Arguments: [ 'ATHexapod' ]</msg>
+<msg timestamp="20220701 16:25:21.332" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:21.613" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:21.617" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:21.906" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:21.909" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:22.043" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:22.180" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATHexapod.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:22.204" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.044718+00:00 2022-07-01 16:19:08.044718336+00:00             4
+2022-07-01 16:18:31.035075+00:00 2022-07-01 16:19:08.035075584+00:00             5
+2022-07-01 16:18:31.003783+00:00 2022-07-01 16:19:08.003783168+00:00             1
+2022-07-01 15:44:02.686833+00:00 2022-07-01 15:44:39.686832896+00:00             2</msg>
+<msg timestamp="20220701 16:25:22.204" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:22.204" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:21.330" endtime="20220701 16:25:22.204"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATHexapod</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:22.205" level="TRACE">Arguments: [ 'ATHexapod' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:22.206" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:22.494" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:22.497" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:22.783" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:22.787" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:22.925" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:23.054" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATHexapod.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:23.060" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:23.317" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:23.320" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:23.606" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:23.609" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:23.738" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:23.884" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATHexapod.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:23.887" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.044718336+00:00.</msg>
+<msg timestamp="20220701 16:25:23.887" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002408448+00:00.</msg>
+<msg timestamp="20220701 16:25:23.887" level="TRACE">The time difference is 0.042309 seconds.</msg>
+<msg timestamp="20220701 16:25:23.887" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:22.204" endtime="20220701 16:25:23.887"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:21.328" endtime="20220701 16:25:23.888"/>
+</test>
+<test id="s1-s1-t5" name="Verify ATMCS Shutdown" line="37">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATMCS</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:23.891" level="TRACE">Arguments: [ 'ATMCS' ]</msg>
+<msg timestamp="20220701 16:25:23.893" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:24.178" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:24.182" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:24.469" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:24.471" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:24.608" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:24.749" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATMCS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:24.756" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.027461+00:00 2022-07-01 16:19:08.027461888+00:00             4
+2022-07-01 16:18:31.024955+00:00 2022-07-01 16:19:08.024955648+00:00             5
+2022-07-01 16:18:31.022390+00:00 2022-07-01 16:19:08.022390016+00:00             1
+2022-07-01 15:44:02.669933+00:00 2022-07-01 15:44:39.669933312+00:00             2</msg>
+<msg timestamp="20220701 16:25:24.756" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:24.756" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:23.891" endtime="20220701 16:25:24.756"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATMCS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:24.757" level="TRACE">Arguments: [ 'ATMCS' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:24.759" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:25.044" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:25.049" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:25.339" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:25.342" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:25.469" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:25.606" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATMCS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:25.614" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:25.901" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:25.904" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:26.185" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:26.188" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:26.319" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:26.470" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATMCS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:26.473" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.027461888+00:00.</msg>
+<msg timestamp="20220701 16:25:26.473" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.001782272+00:00.</msg>
+<msg timestamp="20220701 16:25:26.473" level="TRACE">The time difference is 0.025679 seconds.</msg>
+<msg timestamp="20220701 16:25:26.473" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:24.757" endtime="20220701 16:25:26.473"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:23.889" endtime="20220701 16:25:26.474"/>
+</test>
+<test id="s1-s1-t6" name="Verify ATPneumatics Shutdown" line="42">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATPneumatics</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:26.476" level="TRACE">Arguments: [ 'ATPneumatics' ]</msg>
+<msg timestamp="20220701 16:25:26.478" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:26.764" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:26.774" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:27.059" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:27.062" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:27.192" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:27.334" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATPneumatics.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:27.342" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.012017+00:00 2022-07-01 16:19:08.012017664+00:00             4
+2022-07-01 16:18:31.009105+00:00 2022-07-01 16:19:08.009105664+00:00             5
+2022-07-01 16:18:31.003039+00:00 2022-07-01 16:19:08.003039488+00:00             1
+2022-07-01 15:44:02.670113+00:00 2022-07-01 15:44:39.670113280+00:00             2</msg>
+<msg timestamp="20220701 16:25:27.342" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:27.342" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:26.476" endtime="20220701 16:25:27.342"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATPneumatics</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:27.343" level="TRACE">Arguments: [ 'ATPneumatics' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:27.344" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:27.635" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:27.639" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:27.931" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:27.937" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:28.079" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:28.216" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATPneumatics.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:28.222" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:28.505" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:28.508" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:28.799" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:28.811" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:28.950" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:29.098" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATPneumatics.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:29.105" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.012017664+00:00.</msg>
+<msg timestamp="20220701 16:25:29.105" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002309376+00:00.</msg>
+<msg timestamp="20220701 16:25:29.105" level="TRACE">The time difference is 0.009708 seconds.</msg>
+<msg timestamp="20220701 16:25:29.106" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:27.343" endtime="20220701 16:25:29.106"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:26.475" endtime="20220701 16:25:29.107"/>
+</test>
+<test id="s1-s1-t7" name="Verify ATPtg Shutdown" line="47">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATPtg</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:29.111" level="TRACE">Arguments: [ 'ATPtg' ]</msg>
+<msg timestamp="20220701 16:25:29.113" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:29.401" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:29.415" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:29.709" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:29.712" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:29.850" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:29.988" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATPtg.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:29.997" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:31.471859+00:00 2022-07-01 16:19:08.471859456+00:00             4
+2022-07-01 16:18:31.140808+00:00 2022-07-01 16:19:08.140808192+00:00             5
+2022-07-01 16:18:31.011534+00:00 2022-07-01 16:19:08.011534336+00:00             1
+2022-07-01 15:44:02.688461+00:00 2022-07-01 15:44:39.688461568+00:00             2</msg>
+<msg timestamp="20220701 16:25:29.997" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:29.997" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:29.111" endtime="20220701 16:25:29.997"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATPtg</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:29.998" level="TRACE">Arguments: [ 'ATPtg' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:29.999" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:30.286" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:30.289" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:30.579" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:30.583" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:30.717" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:30.856" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATPtg.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:30.861" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:31.140" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:31.144" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:31.434" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:31.438" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:31.583" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:31.757" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATPtg.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:31.761" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:08.471859456+00:00.</msg>
+<msg timestamp="20220701 16:25:31.761" level="TRACE">command_disable was sent at 2022-07-01 16:19:08.002054912+00:00.</msg>
+<msg timestamp="20220701 16:25:31.761" level="TRACE">The time difference is 0.469804 seconds.</msg>
+<msg timestamp="20220701 16:25:31.761" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:29.997" endtime="20220701 16:25:31.761"/>
+</kw>
+<tag>atcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:29.110" endtime="20220701 16:25:31.761"/>
+</test>
+<status status="PASS" starttime="20220701 16:25:12.569" endtime="20220701 16:25:31.763"/>
+</suite>
+<suite id="s1-s2" name="Verify ComCam Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_ComCam_Shutdown.robot">
+<test id="s1-s2-t1" name="Verify CCOODS Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>CCOODS</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:31.780" level="TRACE">Arguments: [ 'CCOODS' ]</msg>
+<msg timestamp="20220701 16:25:31.782" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:32.072" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:32.075" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:32.361" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:32.364" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:32.490" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:32.614" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.CCOODS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:32.623" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:43.515250+00:00 2022-07-01 16:19:20.515250432+00:00             4
+2022-07-01 16:18:43.511694+00:00 2022-07-01 16:19:20.511694080+00:00             5
+2022-07-01 16:18:43.506458+00:00 2022-07-01 16:19:20.506458880+00:00             1
+2022-07-01 15:27:40.247938+00:00 2022-07-01 15:28:17.247937792+00:00             2</msg>
+<msg timestamp="20220701 16:25:32.623" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:32.623" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:31.780" endtime="20220701 16:25:32.623"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>CCOODS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:32.624" level="TRACE">Arguments: [ 'CCOODS' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:32.626" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:32.911" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:32.915" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:33.225" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:33.228" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:33.362" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:33.501" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCOODS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:33.505" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:33.831" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:33.834" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:34.131" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:34.134" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:34.266" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:34.420" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCOODS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:34.425" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:20.515250432+00:00.</msg>
+<msg timestamp="20220701 16:25:34.425" level="TRACE">command_disable was sent at 2022-07-01 16:19:20.503573248+00:00.</msg>
+<msg timestamp="20220701 16:25:34.425" level="TRACE">The time difference is 0.011677 seconds.</msg>
+<msg timestamp="20220701 16:25:34.425" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:32.624" endtime="20220701 16:25:34.425"/>
+</kw>
+<tag>comcam</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:31.779" endtime="20220701 16:25:34.425"/>
+</test>
+<test id="s1-s2-t2" name="Verify CCCamera Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>CCCamera</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:34.428" level="TRACE">Arguments: [ 'CCCamera' ]</msg>
+<msg timestamp="20220701 16:25:34.429" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:34.719" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:34.722" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:35.007" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:35.009" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:35.144" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:35.277" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:35.293" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:43.580888+00:00 2022-07-01 16:19:20.580888832+00:00             4
+2022-07-01 16:18:43.522414+00:00 2022-07-01 16:19:20.522414592+00:00             5
+2022-07-01 16:18:43.505784+00:00 2022-07-01 16:19:20.505784832+00:00             1
+2022-06-29 21:38:05.283216+00:00 2022-06-29 21:38:42.283216640+00:00             2</msg>
+<msg timestamp="20220701 16:25:35.293" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:35.293" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:34.427" endtime="20220701 16:25:35.293"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>CCCamera</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:35.295" level="TRACE">Arguments: [ 'CCCamera' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:35.296" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:36.012" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:36.014" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:36.296" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:36.299" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:36.439" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:36.578" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:36.582" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:36.862" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:36.866" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:37.164" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:37.167" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:37.296" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:37.441" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:37.444" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:20.580888832+00:00.</msg>
+<msg timestamp="20220701 16:25:37.444" level="TRACE">command_disable was sent at 2022-07-01 16:19:20.503099904+00:00.</msg>
+<msg timestamp="20220701 16:25:37.444" level="TRACE">The time difference is 0.077788 seconds.</msg>
+<msg timestamp="20220701 16:25:37.444" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:35.294" endtime="20220701 16:25:37.444"/>
+</kw>
+<tag>comcam</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:34.427" endtime="20220701 16:25:37.445"/>
+</test>
+<test id="s1-s2-t3" name="Verify CCHeaderService Shutdown" line="26">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>CCHeaderService</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:37.447" level="TRACE">Arguments: [ 'CCHeaderService' ]</msg>
+<msg timestamp="20220701 16:25:37.448" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:37.752" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:37.757" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:38.040" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:38.042" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:38.185" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:38.322" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.CCHeaderService.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:38.332" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:43.510504+00:00 2022-07-01 16:19:20.510504704+00:00             4
+2022-07-01 16:18:43.506372+00:00 2022-07-01 16:19:20.506372608+00:00             5
+2022-07-01 16:18:43.504548+00:00 2022-07-01 16:19:20.504548352+00:00             1
+2022-06-29 21:38:05.287038+00:00 2022-06-29 21:38:42.287038464+00:00             2</msg>
+<msg timestamp="20220701 16:25:38.332" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:38.332" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:37.447" endtime="20220701 16:25:38.332"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>CCHeaderService</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:38.333" level="TRACE">Arguments: [ 'CCHeaderService' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:38.335" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:38.629" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:38.632" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:38.921" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:38.923" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:39.059" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:39.194" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCHeaderService.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:39.201" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:39.480" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:39.482" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:39.764" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:39.767" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:39.899" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:40.026" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCHeaderService.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:40.030" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:20.510504704+00:00.</msg>
+<msg timestamp="20220701 16:25:40.030" level="TRACE">command_disable was sent at 2022-07-01 16:19:20.503357696+00:00.</msg>
+<msg timestamp="20220701 16:25:40.030" level="TRACE">The time difference is 0.007147 seconds.</msg>
+<msg timestamp="20220701 16:25:40.030" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:38.333" endtime="20220701 16:25:40.030"/>
+</kw>
+<tag>comcam</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:37.446" endtime="20220701 16:25:40.031"/>
+</test>
+<status status="PASS" starttime="20220701 16:25:31.765" endtime="20220701 16:25:40.032"/>
+</suite>
+<suite id="s1-s3" name="Verify EAS AE Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_EAS_AE_Shutdown.robot">
+<test id="s1-s3-t1" name="Verify DSM:1 Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>DSM</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:40.046" level="TRACE">Arguments: [ 'DSM' | 1 ]</msg>
+<msg timestamp="20220701 16:25:40.048" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:40.326" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:40.330" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:40.635" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:40.638" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:40.771" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:40.938" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.DSM.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:40.945" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:44.916480+00:00 2022-07-01 16:19:21.916480512+00:00             4
+2022-07-01 16:18:44.914903+00:00 2022-07-01 16:19:21.914903296+00:00             5
+2022-07-01 16:18:44.913135+00:00 2022-07-01 16:19:21.913135360+00:00             1
+2022-06-28 01:49:53.162858+00:00 2022-06-28 01:50:30.162857984+00:00             2</msg>
+<msg timestamp="20220701 16:25:40.945" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:40.945" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:40.046" endtime="20220701 16:25:40.945"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>DSM</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:40.946" level="TRACE">Arguments: [ 'DSM' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:25:40.948" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:41.228" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:41.231" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:41.516" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:41.519" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:41.656" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:41.790" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DSM.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:41.794" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:42.073" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:42.077" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:42.363" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:42.366" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:42.500" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:42.643" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DSM.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:42.646" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:21.916480512+00:00.</msg>
+<msg timestamp="20220701 16:25:42.646" level="TRACE">command_disable was sent at 2022-07-01 16:19:21.911477760+00:00.</msg>
+<msg timestamp="20220701 16:25:42.646" level="TRACE">The time difference is 0.005002 seconds.</msg>
+<msg timestamp="20220701 16:25:42.646" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:40.945" endtime="20220701 16:25:42.646"/>
+</kw>
+<tag>eas_ae</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:40.045" endtime="20220701 16:25:42.647"/>
+</test>
+<test id="s1-s3-t2" name="Verify DSM:2 Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>DSM</arg>
+<arg>2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:42.650" level="TRACE">Arguments: [ 'DSM' | 2 ]</msg>
+<msg timestamp="20220701 16:25:42.652" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:42.937" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:42.941" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:43.222" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:43.224" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:43.363" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:43.500" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.DSM.logevent_summaryState" WHERE salIndex = 2 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:43.507" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:44.908843+00:00 2022-07-01 16:19:21.908843008+00:00             4
+2022-07-01 16:18:44.907002+00:00 2022-07-01 16:19:21.907002624+00:00             5
+2022-07-01 16:18:44.904538+00:00 2022-07-01 16:19:21.904538112+00:00             1
+2022-06-30 23:14:07.583019+00:00 2022-06-30 23:14:44.583019520+00:00             2</msg>
+<msg timestamp="20220701 16:25:43.507" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:43.507" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:42.649" endtime="20220701 16:25:43.507"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>DSM</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=2</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:43.508" level="TRACE">Arguments: [ 'DSM' | 'logevent_summaryState' | 'command_disable' | 600 | index=2 ]</msg>
+<msg timestamp="20220701 16:25:43.509" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:43.792" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:43.795" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:44.083" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:44.086" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:44.221" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:44.352" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DSM.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:44.356" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:44.633" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:44.636" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:44.925" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:44.928" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:45.075" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:45.216" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DSM.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:45.220" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:21.916480512+00:00.</msg>
+<msg timestamp="20220701 16:25:45.220" level="TRACE">command_disable was sent at 2022-07-01 16:19:21.911477760+00:00.</msg>
+<msg timestamp="20220701 16:25:45.220" level="TRACE">The time difference is 0.005002 seconds.</msg>
+<msg timestamp="20220701 16:25:45.220" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:43.508" endtime="20220701 16:25:45.220"/>
+</kw>
+<tag>eas_ae</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:42.648" endtime="20220701 16:25:45.221"/>
+</test>
+<status status="PASS" starttime="20220701 16:25:40.033" endtime="20220701 16:25:45.222"/>
+</suite>
+<suite id="s1-s4" name="Verify EAS Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_EAS_Shutdown.robot">
+<test id="s1-s4-t1" name="Verify DIMM:1 Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>DIMM</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:45.244" level="TRACE">Arguments: [ 'DIMM' | 1 ]</msg>
+<msg timestamp="20220701 16:25:45.246" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:45.525" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:45.528" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:45.814" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:45.817" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:45.951" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:46.090" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.DIMM.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:46.098" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:50.933822+00:00 2022-07-01 16:19:27.933822208+00:00             4
+2022-07-01 16:18:50.925889+00:00 2022-07-01 16:19:27.925889024+00:00             5
+2022-07-01 16:18:50.923378+00:00 2022-07-01 16:19:27.923378432+00:00             1
+2022-06-29 21:37:48.363547+00:00 2022-06-29 21:38:25.363547904+00:00             2</msg>
+<msg timestamp="20220701 16:25:46.098" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:46.098" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:45.244" endtime="20220701 16:25:46.098"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>DIMM</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:46.099" level="TRACE">Arguments: [ 'DIMM' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:25:46.101" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:46.386" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:46.389" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:46.670" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:46.674" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:46.807" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:46.938" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DIMM.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:46.943" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:47.231" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:47.234" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:47.519" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:47.524" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:47.653" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:47.778" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.DIMM.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:47.782" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:29.960273664+00:00.</msg>
+<msg timestamp="20220701 16:25:47.782" level="TRACE">command_disable was sent at 2022-07-01 16:19:27.936377344+00:00.</msg>
+<msg timestamp="20220701 16:25:47.782" level="TRACE">The time difference is 2.023896 seconds.</msg>
+<msg timestamp="20220701 16:25:47.782" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:46.099" endtime="20220701 16:25:47.782"/>
+</kw>
+<tag>eas</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:45.242" endtime="20220701 16:25:47.782"/>
+</test>
+<test id="s1-s4-t2" name="Verify WeatherStation:1 Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>WeatherStation</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:47.785" level="TRACE">Arguments: [ 'WeatherStation' | 1 ]</msg>
+<msg timestamp="20220701 16:25:47.786" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:48.072" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:48.075" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:48.349" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:48.352" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:48.484" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:48.773" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.WeatherStation.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:48.779" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:54.006769+00:00 2022-07-01 16:19:31.006769152+00:00             4
+2022-07-01 16:18:53.999739+00:00 2022-07-01 16:19:30.999739392+00:00             5
+2022-07-01 16:18:53.996802+00:00 2022-07-01 16:19:30.996802816+00:00             1
+2022-06-29 21:37:48.370700+00:00 2022-06-29 21:38:25.370700288+00:00             2</msg>
+<msg timestamp="20220701 16:25:48.779" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:48.780" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:47.784" endtime="20220701 16:25:48.780"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>WeatherStation</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:48.781" level="TRACE">Arguments: [ 'WeatherStation' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:25:48.782" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:49.069" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:49.074" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:49.359" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:49.362" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:49.496" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:49.629" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.WeatherStation.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:49.633" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:49.915" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:49.918" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:50.208" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:50.213" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:50.351" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:50.643" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.WeatherStation.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:50.646" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:31.006769152+00:00.</msg>
+<msg timestamp="20220701 16:25:50.646" level="TRACE">command_disable was sent at 2022-07-01 16:19:29.963272448+00:00.</msg>
+<msg timestamp="20220701 16:25:50.646" level="TRACE">The time difference is 1.043496 seconds.</msg>
+<msg timestamp="20220701 16:25:50.647" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:48.780" endtime="20220701 16:25:50.647"/>
+</kw>
+<tag>eas</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:47.784" endtime="20220701 16:25:50.647"/>
+</test>
+<status status="PASS" starttime="20220701 16:25:45.223" endtime="20220701 16:25:50.648"/>
+</suite>
+<suite id="s1-s5" name="Verify LATISS Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_LATISS_Shutdown.robot">
+<test id="s1-s5-t1" name="Verify ATOODS Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATOODS</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:50.673" level="TRACE">Arguments: [ 'ATOODS' ]</msg>
+<msg timestamp="20220701 16:25:50.675" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:51.048" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:51.051" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:51.326" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:51.329" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:51.458" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:51.606" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATOODS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:51.615" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:32.897645+00:00 2022-07-01 16:19:09.897645312+00:00             4
+2022-07-01 16:18:32.895229+00:00 2022-07-01 16:19:09.895229440+00:00             5
+2022-07-01 16:18:32.892122+00:00 2022-07-01 16:19:09.892122368+00:00             1
+2022-07-01 15:23:02.283550+00:00 2022-07-01 15:23:39.283549952+00:00             2</msg>
+<msg timestamp="20220701 16:25:51.615" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:51.615" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:50.672" endtime="20220701 16:25:51.615"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATOODS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:51.616" level="TRACE">Arguments: [ 'ATOODS' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:51.617" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:51.901" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:51.904" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:52.217" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:52.219" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:52.359" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:52.494" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATOODS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:52.498" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:52.781" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:52.784" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:53.069" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:53.072" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:53.204" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:53.335" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATOODS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:53.339" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:09.897645312+00:00.</msg>
+<msg timestamp="20220701 16:25:53.339" level="TRACE">command_disable was sent at 2022-07-01 16:19:09.890733568+00:00.</msg>
+<msg timestamp="20220701 16:25:53.339" level="TRACE">The time difference is 0.006911 seconds.</msg>
+<msg timestamp="20220701 16:25:53.340" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:51.615" endtime="20220701 16:25:53.340"/>
+</kw>
+<tag>latiss</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:50.670" endtime="20220701 16:25:53.340"/>
+</test>
+<test id="s1-s5-t2" name="Verify ATCamera Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATCamera</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:53.342" level="TRACE">Arguments: [ 'ATCamera' ]</msg>
+<msg timestamp="20220701 16:25:53.343" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:53.628" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:53.631" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:53.906" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:53.909" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:54.041" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:54.186" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:54.194" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:32.974882+00:00 2022-07-01 16:19:09.974882560+00:00             4
+2022-07-01 16:18:32.918307+00:00 2022-07-01 16:19:09.918307328+00:00             5
+2022-07-01 16:18:32.900298+00:00 2022-07-01 16:19:09.900298240+00:00             1
+2022-06-29 21:37:44.767563+00:00 2022-06-29 21:38:21.767563008+00:00             2</msg>
+<msg timestamp="20220701 16:25:54.194" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:54.197" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:53.342" endtime="20220701 16:25:54.197"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATCamera</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:54.199" level="TRACE">Arguments: [ 'ATCamera' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:54.200" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:54.481" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:54.485" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:54.773" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:54.776" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:54.910" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:55.043" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:55.048" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:55.333" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:55.336" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:55.624" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:55.627" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:55.757" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:55.900" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:55.903" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:09.974882560+00:00.</msg>
+<msg timestamp="20220701 16:25:55.903" level="TRACE">command_disable was sent at 2022-07-01 16:19:09.889962752+00:00.</msg>
+<msg timestamp="20220701 16:25:55.903" level="TRACE">The time difference is 0.084919 seconds.</msg>
+<msg timestamp="20220701 16:25:55.904" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:54.198" endtime="20220701 16:25:55.904"/>
+</kw>
+<tag>latiss</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:53.341" endtime="20220701 16:25:55.905"/>
+</test>
+<test id="s1-s5-t3" name="Verify ATHeaderService Shutdown" line="26">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATHeaderService</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:55.911" level="TRACE">Arguments: [ 'ATHeaderService' ]</msg>
+<msg timestamp="20220701 16:25:55.914" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:56.201" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:56.206" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:56.509" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:56.512" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:56.654" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:56.789" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATHeaderService.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:56.800" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:32.896366+00:00 2022-07-01 16:19:09.896366848+00:00             4
+2022-07-01 16:18:32.893829+00:00 2022-07-01 16:19:09.893829120+00:00             5
+2022-07-01 16:18:32.891640+00:00 2022-07-01 16:19:09.891640576+00:00             1
+2022-06-29 21:37:44.771187+00:00 2022-06-29 21:38:21.771187200+00:00             2</msg>
+<msg timestamp="20220701 16:25:56.800" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:56.800" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:55.910" endtime="20220701 16:25:56.800"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATHeaderService</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:56.801" level="TRACE">Arguments: [ 'ATHeaderService' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:56.802" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:57.088" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:57.091" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:57.383" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:57.387" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:57.518" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:57.654" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATHeaderService.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:57.661" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:57.942" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:57.946" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:58.238" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:58.241" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:58.379" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:58.524" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATHeaderService.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:25:58.527" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:09.896366848+00:00.</msg>
+<msg timestamp="20220701 16:25:58.527" level="TRACE">command_disable was sent at 2022-07-01 16:19:09.890446336+00:00.</msg>
+<msg timestamp="20220701 16:25:58.527" level="TRACE">The time difference is 0.00592 seconds.</msg>
+<msg timestamp="20220701 16:25:58.527" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:56.801" endtime="20220701 16:25:58.528"/>
+</kw>
+<tag>latiss</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:55.908" endtime="20220701 16:25:58.528"/>
+</test>
+<test id="s1-s5-t4" name="Verify ATSpectrograph Shutdown" line="31">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ATSpectrograph</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:25:58.530" level="TRACE">Arguments: [ 'ATSpectrograph' ]</msg>
+<msg timestamp="20220701 16:25:58.531" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:58.834" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:58.841" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:59.131" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:25:59.133" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:59.265" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:25:59.413" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATSpectrograph.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:25:59.421" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:36.499234+00:00 2022-07-01 16:19:13.499234560+00:00             4
+2022-07-01 16:18:36.492423+00:00 2022-07-01 16:19:13.492423168+00:00             5
+2022-07-01 16:18:36.490282+00:00 2022-07-01 16:19:13.490281984+00:00             1
+2022-06-29 21:37:47.782679+00:00 2022-06-29 21:38:24.782679040+00:00             2</msg>
+<msg timestamp="20220701 16:25:59.421" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:25:59.421" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:58.530" endtime="20220701 16:25:59.421"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATSpectrograph</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:25:59.422" level="TRACE">Arguments: [ 'ATSpectrograph' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:25:59.424" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:25:59.710" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:25:59.713" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:00.003" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:00.007" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:00.148" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:00.285" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATSpectrograph.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:00.290" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:00.580" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:00.583" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:00.877" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:00.881" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:01.016" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:01.192" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATSpectrograph.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:01.196" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:13.499234560+00:00.</msg>
+<msg timestamp="20220701 16:26:01.196" level="TRACE">command_disable was sent at 2022-07-01 16:19:09.890211840+00:00.</msg>
+<msg timestamp="20220701 16:26:01.196" level="TRACE">The time difference is 3.609022 seconds.</msg>
+<msg timestamp="20220701 16:26:01.196" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:25:59.422" endtime="20220701 16:26:01.196"/>
+</kw>
+<tag>latiss</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:25:58.529" endtime="20220701 16:26:01.196"/>
+</test>
+<status status="PASS" starttime="20220701 16:25:50.651" endtime="20220701 16:26:01.197"/>
+</suite>
+<suite id="s1-s6" name="Verify MTCS Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_MTCS_Shutdown.robot">
+<test id="s1-s6-t1" name="Verify MTMount Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTMount</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:01.221" level="TRACE">Arguments: [ 'MTMount' ]</msg>
+<msg timestamp="20220701 16:26:01.222" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:01.509" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:01.513" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:01.801" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:01.803" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:01.944" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:02.085" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTMount.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:02.094" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:38.053826+00:00 2022-07-01 16:19:15.053826304+00:00             4
+2022-07-01 16:18:38.035638+00:00 2022-07-01 16:19:15.035638272+00:00             5
+2022-07-01 16:18:37.888745+00:00 2022-07-01 16:19:14.888745472+00:00             1
+2022-06-29 21:37:53.931920+00:00 2022-06-29 21:38:30.931920640+00:00             2</msg>
+<msg timestamp="20220701 16:26:02.094" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:02.096" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:01.221" endtime="20220701 16:26:02.096"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTMount</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:02.097" level="TRACE">Arguments: [ 'MTMount' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:02.098" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:02.379" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:02.382" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:02.677" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:02.681" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:02.826" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:02.965" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTMount.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:02.969" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:03.258" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:03.261" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:03.557" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:03.559" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:03.701" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:03.869" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTMount.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:03.873" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:15.053826304+00:00.</msg>
+<msg timestamp="20220701 16:26:03.873" level="TRACE">command_disable was sent at 2022-07-01 16:19:14.836960256+00:00.</msg>
+<msg timestamp="20220701 16:26:03.873" level="TRACE">The time difference is 0.216866 seconds.</msg>
+<msg timestamp="20220701 16:26:03.873" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:02.096" endtime="20220701 16:26:03.873"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:01.220" endtime="20220701 16:26:03.874"/>
+</test>
+<test id="s1-s6-t2" name="Verify MTPtg Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTPtg</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:03.875" level="TRACE">Arguments: [ 'MTPtg' ]</msg>
+<msg timestamp="20220701 16:26:03.877" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:04.161" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:04.164" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:04.446" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:04.450" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:04.588" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:04.732" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTPtg.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:04.739" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:38.835132+00:00 2022-07-01 16:19:15.835131904+00:00             4
+2022-07-01 16:18:38.195466+00:00 2022-07-01 16:19:15.195466752+00:00             5
+2022-07-01 16:18:38.067425+00:00 2022-07-01 16:19:15.067425024+00:00             1
+2022-07-01 14:53:07.784851+00:00 2022-07-01 14:53:44.784851200+00:00             2</msg>
+<msg timestamp="20220701 16:26:04.739" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:04.739" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:03.875" endtime="20220701 16:26:04.739"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTPtg</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:04.740" level="TRACE">Arguments: [ 'MTPtg' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:04.741" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:05.035" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:05.038" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:05.323" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:05.327" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:05.467" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:05.598" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTPtg.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:05.602" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:05.886" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:05.889" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:06.183" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:06.186" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:06.320" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:06.468" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTPtg.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:06.471" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:15.835131904+00:00.</msg>
+<msg timestamp="20220701 16:26:06.471" level="TRACE">command_disable was sent at 2022-07-01 16:19:15.055042816+00:00.</msg>
+<msg timestamp="20220701 16:26:06.471" level="TRACE">The time difference is 0.780089 seconds.</msg>
+<msg timestamp="20220701 16:26:06.473" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:04.739" endtime="20220701 16:26:06.473"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:03.875" endtime="20220701 16:26:06.473"/>
+</test>
+<test id="s1-s6-t3" name="Verify MTDome Shutdown" line="26">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTDome</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:06.476" level="TRACE">Arguments: [ 'MTDome' ]</msg>
+<msg timestamp="20220701 16:26:06.477" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:06.761" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:06.764" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:07.053" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:07.056" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:07.192" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:07.326" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTDome.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:07.335" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:42.016890+00:00 2022-07-01 16:19:19.016890880+00:00             4
+2022-07-01 16:18:42.008754+00:00 2022-07-01 16:19:19.008754176+00:00             5
+2022-07-01 16:18:42.004631+00:00 2022-07-01 16:19:19.004631040+00:00             1
+2022-06-29 21:37:54.704588+00:00 2022-06-29 21:38:31.704588544+00:00             2</msg>
+<msg timestamp="20220701 16:26:07.335" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:07.335" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:06.476" endtime="20220701 16:26:07.335"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTDome</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:07.336" level="TRACE">Arguments: [ 'MTDome' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:07.338" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:07.629" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:07.633" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:07.925" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:07.928" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:08.062" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:08.194" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTDome.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:08.199" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:08.482" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:08.486" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:08.773" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:08.776" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:08.913" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:09.118" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTDome.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:09.122" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:19.016890880+00:00.</msg>
+<msg timestamp="20220701 16:26:09.122" level="TRACE">command_disable was sent at 2022-07-01 16:19:19.003182080+00:00.</msg>
+<msg timestamp="20220701 16:26:09.122" level="TRACE">The time difference is 0.013708 seconds.</msg>
+<msg timestamp="20220701 16:26:09.122" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:07.336" endtime="20220701 16:26:09.122"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:06.475" endtime="20220701 16:26:09.123"/>
+</test>
+<test id="s1-s6-t4" name="Verify MTDomeTrajectory Shutdown" line="31">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTDomeTrajectory</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:09.125" level="TRACE">Arguments: [ 'MTDomeTrajectory' ]</msg>
+<msg timestamp="20220701 16:26:09.126" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:09.408" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:09.411" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:09.695" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:09.699" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:09.836" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:09.973" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTDomeTrajectory.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:09.981" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:42.029501+00:00 2022-07-01 16:19:19.029501440+00:00             4
+2022-07-01 16:18:42.021454+00:00 2022-07-01 16:19:19.021454848+00:00             5
+2022-07-01 16:18:42.019495+00:00 2022-07-01 16:19:19.019495424+00:00             1
+2022-06-29 21:37:54.707819+00:00 2022-06-29 21:38:31.707819008+00:00             2</msg>
+<msg timestamp="20220701 16:26:09.981" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:09.981" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:09.124" endtime="20220701 16:26:09.981"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTDomeTrajectory</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:09.982" level="TRACE">Arguments: [ 'MTDomeTrajectory' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:09.983" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:10.280" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:10.283" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:10.572" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:10.575" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:10.714" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:10.843" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTDomeTrajectory.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:10.847" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:11.124" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:11.127" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:11.410" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:11.413" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:11.545" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:11.699" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTDomeTrajectory.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:11.702" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:19.029501440+00:00.</msg>
+<msg timestamp="20220701 16:26:11.702" level="TRACE">command_disable was sent at 2022-07-01 16:19:19.018500096+00:00.</msg>
+<msg timestamp="20220701 16:26:11.702" level="TRACE">The time difference is 0.011001 seconds.</msg>
+<msg timestamp="20220701 16:26:11.702" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:09.982" endtime="20220701 16:26:11.702"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:09.123" endtime="20220701 16:26:11.702"/>
+</test>
+<test id="s1-s6-t5" name="Verify MTAOS Shutdown" line="36">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTAOS</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:11.704" level="TRACE">Arguments: [ 'MTAOS' ]</msg>
+<msg timestamp="20220701 16:26:11.705" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:12.041" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:12.043" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:12.751" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:12.781" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:13.031" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:13.283" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTAOS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:13.290" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:38.863557+00:00 2022-07-01 16:19:15.863557120+00:00             4
+2022-07-01 16:18:38.839757+00:00 2022-07-01 16:19:15.839757568+00:00             5
+2022-07-01 16:18:38.837757+00:00 2022-07-01 16:19:15.837757696+00:00             1
+2022-06-29 21:38:02.747074+00:00 2022-06-29 21:38:39.747074816+00:00             2</msg>
+<msg timestamp="20220701 16:26:13.290" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:13.290" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:11.704" endtime="20220701 16:26:13.290"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTAOS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:13.291" level="TRACE">Arguments: [ 'MTAOS' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:13.293" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:13.667" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:13.671" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:14.272" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:14.276" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:14.469" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:14.672" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTAOS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:14.677" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:15.009" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:15.012" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:15.295" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:15.299" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:15.443" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:15.618" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTAOS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:15.623" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:15.863557120+00:00.</msg>
+<msg timestamp="20220701 16:26:15.623" level="TRACE">command_disable was sent at 2022-07-01 16:19:15.836785920+00:00.</msg>
+<msg timestamp="20220701 16:26:15.623" level="TRACE">The time difference is 0.026771 seconds.</msg>
+<msg timestamp="20220701 16:26:15.623" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:13.290" endtime="20220701 16:26:15.623"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:11.703" endtime="20220701 16:26:15.624"/>
+</test>
+<test id="s1-s6-t6" name="Verify MTHexapod:1 Shutdown" line="41">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTHexapod</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:15.627" level="TRACE">Arguments: [ 'MTHexapod' | 1 ]</msg>
+<msg timestamp="20220701 16:26:15.628" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:15.915" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:15.917" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:16.206" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:16.209" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:16.339" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:16.471" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTHexapod.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:16.479" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:41.978104+00:00 2022-07-01 16:19:18.978103808+00:00             4
+2022-07-01 16:18:41.958938+00:00 2022-07-01 16:19:18.958938368+00:00             5
+2022-07-01 16:18:41.955104+00:00 2022-07-01 16:19:18.955104512+00:00             1
+2022-06-29 21:37:54.445461+00:00 2022-06-29 21:38:31.445461248+00:00             2</msg>
+<msg timestamp="20220701 16:26:16.479" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:16.479" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:15.626" endtime="20220701 16:26:16.479"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTHexapod</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:16.480" level="TRACE">Arguments: [ 'MTHexapod' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:26:16.482" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:16.766" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:16.769" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:17.050" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:17.053" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:17.194" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:17.326" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTHexapod.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:17.329" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:17.614" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:17.616" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:17.896" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:17.899" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:18.034" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:18.448" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTHexapod.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:18.452" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:18.988605696+00:00.</msg>
+<msg timestamp="20220701 16:26:18.452" level="TRACE">command_disable was sent at 2022-07-01 16:19:18.980085504+00:00.</msg>
+<msg timestamp="20220701 16:26:18.452" level="TRACE">The time difference is 0.00852 seconds.</msg>
+<msg timestamp="20220701 16:26:18.452" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:16.479" endtime="20220701 16:26:18.452"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:15.625" endtime="20220701 16:26:18.452"/>
+</test>
+<test id="s1-s6-t7" name="Verify MTHexapod:2 Shutdown" line="46">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTHexapod</arg>
+<arg>2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:18.455" level="TRACE">Arguments: [ 'MTHexapod' | 2 ]</msg>
+<msg timestamp="20220701 16:26:18.457" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:18.737" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:18.740" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:19.027" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:19.031" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:19.168" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:19.305" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTHexapod.logevent_summaryState" WHERE salIndex = 2 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:19.313" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:41.988605+00:00 2022-07-01 16:19:18.988605696+00:00             4
+2022-07-01 16:18:41.984116+00:00 2022-07-01 16:19:18.984116224+00:00             5
+2022-07-01 16:18:41.981194+00:00 2022-07-01 16:19:18.981193984+00:00             1
+2022-06-29 21:37:54.700268+00:00 2022-06-29 21:38:31.700268544+00:00             2</msg>
+<msg timestamp="20220701 16:26:19.313" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:19.313" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:18.455" endtime="20220701 16:26:19.314"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTHexapod</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=2</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:19.315" level="TRACE">Arguments: [ 'MTHexapod' | 'logevent_summaryState' | 'command_disable' | 600 | index=2 ]</msg>
+<msg timestamp="20220701 16:26:19.316" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:19.595" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:19.598" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:19.876" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:19.879" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:20.017" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:20.151" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTHexapod.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:20.155" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:20.436" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:20.439" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:20.732" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:20.736" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:20.875" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:21.006" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTHexapod.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:21.010" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:18.988605696+00:00.</msg>
+<msg timestamp="20220701 16:26:21.010" level="TRACE">command_disable was sent at 2022-07-01 16:19:18.980085504+00:00.</msg>
+<msg timestamp="20220701 16:26:21.010" level="TRACE">The time difference is 0.00852 seconds.</msg>
+<msg timestamp="20220701 16:26:21.010" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:19.314" endtime="20220701 16:26:21.010"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:18.453" endtime="20220701 16:26:21.010"/>
+</test>
+<test id="s1-s6-t8" name="Verify MTRotator Shutdown" line="51">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTRotator</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:21.012" level="TRACE">Arguments: [ 'MTRotator' ]</msg>
+<msg timestamp="20220701 16:26:21.014" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:21.303" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:21.307" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:21.587" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:21.590" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:21.720" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:21.861" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTRotator.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:21.868" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:42.001924+00:00 2022-07-01 16:19:19.001924608+00:00             4
+2022-07-01 16:18:41.992981+00:00 2022-07-01 16:19:18.992980992+00:00             5
+2022-07-01 16:18:38.996148+00:00 2022-07-01 16:19:15.996148224+00:00             3
+2022-07-01 14:54:51.281752+00:00 2022-07-01 14:55:28.281752320+00:00             2</msg>
+<msg timestamp="20220701 16:26:21.868" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'fault', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:21.868" level="FAIL">Incorrect Shutdown Order: ['offline', 'standby', 'fault', 'enabled'] does not match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:21.870" level="DEBUG">Traceback (most recent call last):
+  File "/home/saluser/repos/robotframework_EFD/QueryEfd.py", line 320, in verify_shutdown_process
+    raise AssertionError(
+AssertionError: Incorrect Shutdown Order: ['offline', 'standby', 'fault', 'enabled'] does not match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<status status="FAIL" starttime="20220701 16:26:21.012" endtime="20220701 16:26:21.870"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTRotator</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<status status="NOT RUN" starttime="20220701 16:26:21.871" endtime="20220701 16:26:21.871"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="FAIL" starttime="20220701 16:26:21.011" endtime="20220701 16:26:21.872">Incorrect Shutdown Order: ['offline', 'standby', 'fault', 'enabled'] does not match ['offline', 'standby', 'disabled', 'enabled']</status>
+</test>
+<test id="s1-s6-t9" name="Verify MTM1M3 Shutdown" line="56">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTM1M3</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:21.874" level="TRACE">Arguments: [ 'MTM1M3' ]</msg>
+<msg timestamp="20220701 16:26:21.875" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:22.177" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:22.180" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:22.463" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:22.466" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:22.607" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:22.747" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTM1M3.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:22.754" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:38.873779+00:00 2022-07-01 16:19:15.873779200+00:00             4
+2022-07-01 16:18:38.871713+00:00 2022-07-01 16:19:15.871713280+00:00             5
+2022-07-01 16:18:38.868117+00:00 2022-07-01 16:19:15.868117760+00:00             1
+2022-07-01 15:25:36.549522+00:00 2022-07-01 15:26:13.549522688+00:00             2</msg>
+<msg timestamp="20220701 16:26:22.754" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:22.754" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:21.873" endtime="20220701 16:26:22.754"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTM1M3</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:22.755" level="TRACE">Arguments: [ 'MTM1M3' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:22.756" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:23.049" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:23.052" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:23.315" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:23.317" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:23.451" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:23.584" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTM1M3.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:23.589" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:23.877" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:23.879" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:24.176" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:24.179" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:24.319" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:24.856" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTM1M3.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:24.860" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:15.873779200+00:00.</msg>
+<msg timestamp="20220701 16:26:24.860" level="TRACE">command_disable was sent at 2022-07-01 16:19:15.864894464+00:00.</msg>
+<msg timestamp="20220701 16:26:24.860" level="TRACE">The time difference is 0.008884 seconds.</msg>
+<msg timestamp="20220701 16:26:24.861" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:22.754" endtime="20220701 16:26:24.861"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:21.872" endtime="20220701 16:26:24.861"/>
+</test>
+<test id="s1-s6-t10" name="Verify MTM2 Shutdown" line="61">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>MTM2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:24.863" level="TRACE">Arguments: [ 'MTM2' ]</msg>
+<msg timestamp="20220701 16:26:24.865" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:25.146" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:25.149" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:25.429" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:25.432" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:25.559" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:25.700" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.MTM2.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:25.707" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:41.952185+00:00 2022-07-01 16:19:18.952185344+00:00             4
+2022-07-01 16:18:41.941585+00:00 2022-07-01 16:19:18.941585152+00:00             5
+2022-07-01 16:18:41.881448+00:00 2022-07-01 16:19:18.881448448+00:00             1
+2022-06-29 21:38:02.737116+00:00 2022-06-29 21:38:39.737116672+00:00             2</msg>
+<msg timestamp="20220701 16:26:25.707" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:25.707" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:24.863" endtime="20220701 16:26:25.707"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>MTM2</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:25.708" level="TRACE">Arguments: [ 'MTM2' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:25.709" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:25.993" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:25.996" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:26.285" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:26.288" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:26.425" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:26.560" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTM2.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:26.566" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:26.845" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:26.848" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:27.132" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:27.135" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:27.275" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:27.679" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.MTM2.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:27.683" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:18.952185344+00:00.</msg>
+<msg timestamp="20220701 16:26:27.683" level="TRACE">command_disable was sent at 2022-07-01 16:19:15.875469568+00:00.</msg>
+<msg timestamp="20220701 16:26:27.683" level="TRACE">The time difference is 3.076715 seconds.</msg>
+<msg timestamp="20220701 16:26:27.683" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:25.707" endtime="20220701 16:26:27.683"/>
+</kw>
+<tag>mtcs</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:24.862" endtime="20220701 16:26:27.684"/>
+</test>
+<status status="FAIL" starttime="20220701 16:26:01.200" endtime="20220701 16:26:27.686"/>
+</suite>
+<suite id="s1-s7" name="Verify ObsSys1 Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_ObsSys1_Shutdown.robot">
+<test id="s1-s7-t1" name="Verify ScriptQueue:1 Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ScriptQueue</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:27.711" level="TRACE">Arguments: [ 'ScriptQueue' | 1 ]</msg>
+<msg timestamp="20220701 16:26:27.713" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:27.993" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:27.999" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:28.288" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:28.291" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:28.427" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:28.587" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ScriptQueue.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:28.596" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:56.444114+00:00 2022-07-01 16:19:33.444114688+00:00             4
+2022-07-01 16:18:56.442523+00:00 2022-07-01 16:19:33.442523648+00:00             5
+2022-07-01 16:18:56.440400+00:00 2022-07-01 16:19:33.440399872+00:00             1
+2022-06-28 15:44:03.549407+00:00 2022-06-28 15:44:40.549407744+00:00             2</msg>
+<msg timestamp="20220701 16:26:28.596" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:28.596" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:27.711" endtime="20220701 16:26:28.596"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ScriptQueue</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:28.598" level="TRACE">Arguments: [ 'ScriptQueue' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:26:28.599" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:28.886" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:28.889" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:29.175" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:29.178" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:29.316" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:29.452" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ScriptQueue.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:29.456" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:29.733" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:29.737" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:30.019" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:30.021" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:30.156" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:30.284" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ScriptQueue.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:30.287" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:33.451879168+00:00.</msg>
+<msg timestamp="20220701 16:26:30.287" level="TRACE">command_disable was sent at 2022-07-01 16:19:33.446661120+00:00.</msg>
+<msg timestamp="20220701 16:26:30.287" level="TRACE">The time difference is 0.005218 seconds.</msg>
+<msg timestamp="20220701 16:26:30.287" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:28.597" endtime="20220701 16:26:30.287"/>
+</kw>
+<tag>obsys1</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:27.710" endtime="20220701 16:26:30.287"/>
+</test>
+<test id="s1-s7-t2" name="Verify ScriptQueue:2 Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>ScriptQueue</arg>
+<arg>2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:30.289" level="TRACE">Arguments: [ 'ScriptQueue' | 2 ]</msg>
+<msg timestamp="20220701 16:26:30.290" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:30.576" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:30.579" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:30.872" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:30.875" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:31.007" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:31.135" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ScriptQueue.logevent_summaryState" WHERE salIndex = 2 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:31.142" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:56.451879+00:00 2022-07-01 16:19:33.451879168+00:00             4
+2022-07-01 16:18:56.450530+00:00 2022-07-01 16:19:33.450530816+00:00             5
+2022-07-01 16:18:56.449232+00:00 2022-07-01 16:19:33.449232128+00:00             1
+2022-06-28 15:22:12.965639+00:00 2022-06-28 15:22:49.965639168+00:00             2</msg>
+<msg timestamp="20220701 16:26:31.142" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:31.142" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:30.288" endtime="20220701 16:26:31.142"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ScriptQueue</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=2</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:31.143" level="TRACE">Arguments: [ 'ScriptQueue' | 'logevent_summaryState' | 'command_disable' | 600 | index=2 ]</msg>
+<msg timestamp="20220701 16:26:31.145" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:31.424" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:31.428" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:31.723" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:31.726" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:31.900" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:32.093" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ScriptQueue.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:32.098" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:32.383" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:32.386" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:32.670" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:32.672" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:32.801" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:32.939" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ScriptQueue.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:32.942" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:33.451879168+00:00.</msg>
+<msg timestamp="20220701 16:26:32.942" level="TRACE">command_disable was sent at 2022-07-01 16:19:33.446661120+00:00.</msg>
+<msg timestamp="20220701 16:26:32.942" level="TRACE">The time difference is 0.005218 seconds.</msg>
+<msg timestamp="20220701 16:26:32.942" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:31.143" endtime="20220701 16:26:32.942"/>
+</kw>
+<tag>obsys1</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:30.288" endtime="20220701 16:26:32.943"/>
+</test>
+<test id="s1-s7-t3" name="Verify Watcher Shutdown" line="26">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>Watcher</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:32.945" level="TRACE">Arguments: [ 'Watcher' ]</msg>
+<msg timestamp="20220701 16:26:32.947" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:33.237" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:33.240" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:33.523" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:33.526" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:33.655" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:33.786" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.Watcher.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:33.793" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:56.435328+00:00 2022-07-01 16:19:33.435328768+00:00             4
+2022-07-01 16:18:56.427591+00:00 2022-07-01 16:19:33.427591424+00:00             5
+2022-07-01 16:18:56.425334+00:00 2022-07-01 16:19:33.425334784+00:00             1
+2022-06-28 00:25:42.969929+00:00 2022-06-28 00:26:19.969929216+00:00             2</msg>
+<msg timestamp="20220701 16:26:33.793" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:33.793" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:32.945" endtime="20220701 16:26:33.793"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>Watcher</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:33.794" level="TRACE">Arguments: [ 'Watcher' | 'logevent_summaryState' | 'command_disable' | 600 ]</msg>
+<msg timestamp="20220701 16:26:33.795" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:34.079" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:34.083" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:34.374" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:34.377" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:34.520" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:34.657" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Watcher.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:34.661" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:34.948" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:34.952" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:35.242" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:35.245" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:35.384" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:35.534" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Watcher.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:35.538" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:33.435328768+00:00.</msg>
+<msg timestamp="20220701 16:26:35.538" level="TRACE">command_disable was sent at 2022-07-01 16:19:33.424383232+00:00.</msg>
+<msg timestamp="20220701 16:26:35.538" level="TRACE">The time difference is 0.010945 seconds.</msg>
+<msg timestamp="20220701 16:26:35.538" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:33.793" endtime="20220701 16:26:35.538"/>
+</kw>
+<tag>obsys1</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:32.944" endtime="20220701 16:26:35.539"/>
+</test>
+<status status="PASS" starttime="20220701 16:26:27.690" endtime="20220701 16:26:35.541"/>
+</suite>
+<suite id="s1-s8" name="Verify ObsSys2 Shutdown" source="/home/saluser/repos/robotframework_EFD/Shutdown/Verify_ObsSys2_Shutdown.robot">
+<test id="s1-s8-t1" name="Verify Scheduler:1 Shutdown" line="16">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>Scheduler</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:35.557" level="TRACE">Arguments: [ 'Scheduler' | 1 ]</msg>
+<msg timestamp="20220701 16:26:35.560" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:35.890" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:35.895" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:36.202" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:36.206" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:36.340" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:36.493" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.Scheduler.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:36.499" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:24.720181+00:00 2022-07-01 16:19:01.720181248+00:00             4
+2022-07-01 16:18:24.691353+00:00 2022-07-01 16:19:01.691353856+00:00             5
+2022-07-01 16:18:24.687571+00:00 2022-07-01 16:19:01.687571712+00:00             1
+2022-06-29 21:38:06.495425+00:00 2022-06-29 21:38:43.495425536+00:00             2</msg>
+<msg timestamp="20220701 16:26:36.499" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:36.499" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:35.557" endtime="20220701 16:26:36.500"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>Scheduler</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:36.501" level="TRACE">Arguments: [ 'Scheduler' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:26:36.502" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:36.796" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:36.799" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:37.086" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:37.090" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:37.221" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:37.352" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Scheduler.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:37.357" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:37.644" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:37.647" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:37.928" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:37.931" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:38.065" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:38.219" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Scheduler.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:38.224" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:06.743597312+00:00.</msg>
+<msg timestamp="20220701 16:26:38.224" level="TRACE">command_disable was sent at 2022-07-01 16:19:01.722980096+00:00.</msg>
+<msg timestamp="20220701 16:26:38.224" level="TRACE">The time difference is 5.020617 seconds.</msg>
+<msg timestamp="20220701 16:26:38.224" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:36.500" endtime="20220701 16:26:38.224"/>
+</kw>
+<tag>obsys2</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:35.556" endtime="20220701 16:26:38.225"/>
+</test>
+<test id="s1-s8-t2" name="Verify Scheduler:2 Shutdown" line="21">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>Scheduler</arg>
+<arg>2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:38.227" level="TRACE">Arguments: [ 'Scheduler' | 2 ]</msg>
+<msg timestamp="20220701 16:26:38.229" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:38.518" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:38.521" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:38.804" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:38.807" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:38.948" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:39.080" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.Scheduler.logevent_summaryState" WHERE salIndex = 2 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:39.087" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:29.743597+00:00 2022-07-01 16:19:06.743597312+00:00             4
+2022-07-01 16:18:29.729995+00:00 2022-07-01 16:19:06.729995776+00:00             5
+2022-07-01 16:18:29.727911+00:00 2022-07-01 16:19:06.727911680+00:00             1
+2022-06-29 21:38:06.500009+00:00 2022-06-29 21:38:43.500009728+00:00             2</msg>
+<msg timestamp="20220701 16:26:39.087" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:39.088" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:38.227" endtime="20220701 16:26:39.088"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>Scheduler</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=2</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:39.089" level="TRACE">Arguments: [ 'Scheduler' | 'logevent_summaryState' | 'command_disable' | 600 | index=2 ]</msg>
+<msg timestamp="20220701 16:26:39.090" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:39.375" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:39.378" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:39.672" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:39.674" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:39.866" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:40.001" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Scheduler.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:40.007" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:40.300" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:40.303" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:40.589" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:40.592" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:40.722" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:40.853" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.Scheduler.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:40.856" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:06.743597312+00:00.</msg>
+<msg timestamp="20220701 16:26:40.856" level="TRACE">command_disable was sent at 2022-07-01 16:19:01.722980096+00:00.</msg>
+<msg timestamp="20220701 16:26:40.856" level="TRACE">The time difference is 5.020617 seconds.</msg>
+<msg timestamp="20220701 16:26:40.856" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:39.088" endtime="20220701 16:26:40.856"/>
+</kw>
+<tag>obsys2</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:38.226" endtime="20220701 16:26:40.857"/>
+</test>
+<test id="s1-s8-t3" name="Verify OCPS:1 Shutdown" line="26">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>OCPS</arg>
+<arg>1</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:40.861" level="TRACE">Arguments: [ 'OCPS' | 1 ]</msg>
+<msg timestamp="20220701 16:26:40.862" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:41.142" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:41.145" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:41.428" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:41.432" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:41.566" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:41.692" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.OCPS.logevent_summaryState" WHERE salIndex = 1 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:41.702" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:29.759792+00:00 2022-07-01 16:19:06.759792128+00:00             4
+2022-07-01 16:18:29.749233+00:00 2022-07-01 16:19:06.749233664+00:00             5
+2022-07-01 16:18:29.747295+00:00 2022-07-01 16:19:06.747295744+00:00             1
+2022-06-29 21:38:06.503270+00:00 2022-06-29 21:38:43.503270656+00:00             2</msg>
+<msg timestamp="20220701 16:26:41.702" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:41.702" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:40.860" endtime="20220701 16:26:41.702"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>OCPS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=1</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:41.703" level="TRACE">Arguments: [ 'OCPS' | 'logevent_summaryState' | 'command_disable' | 600 | index=1 ]</msg>
+<msg timestamp="20220701 16:26:41.704" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:41.990" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:41.996" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:42.325" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:42.328" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:42.468" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:42.600" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.OCPS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:42.604" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:42.895" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:42.900" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:43.187" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:43.191" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:43.327" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:43.480" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.OCPS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:43.483" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:06.773477888+00:00.</msg>
+<msg timestamp="20220701 16:26:43.483" level="TRACE">command_disable was sent at 2022-07-01 16:19:06.762415872+00:00.</msg>
+<msg timestamp="20220701 16:26:43.483" level="TRACE">The time difference is 0.011062 seconds.</msg>
+<msg timestamp="20220701 16:26:43.484" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:41.702" endtime="20220701 16:26:43.484"/>
+</kw>
+<tag>obsys2</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:40.859" endtime="20220701 16:26:43.484"/>
+</test>
+<test id="s1-s8-t4" name="Verify OCPS:2 Shutdown" line="31">
+<kw name="Verify Shutdown Process" library="QueryEfd">
+<arg>OCPS</arg>
+<arg>2</arg>
+<doc>Fails if the sequence of SummaryStates does not match
+the expected sequence.</doc>
+<msg timestamp="20220701 16:26:43.486" level="TRACE">Arguments: [ 'OCPS' | 2 ]</msg>
+<msg timestamp="20220701 16:26:43.487" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:43.842" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:43.845" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:44.123" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:44.126" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:44.263" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:44.398" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.OCPS.logevent_summaryState" WHERE salIndex = 2 GROUP BY * ORDER BY DESC LIMIT 4</msg>
+<msg timestamp="20220701 16:26:44.405" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-07-01 16:18:29.773477+00:00 2022-07-01 16:19:06.773477888+00:00             4
+2022-07-01 16:18:29.765076+00:00 2022-07-01 16:19:06.765076736+00:00             5
+2022-07-01 16:18:29.763365+00:00 2022-07-01 16:19:06.763365632+00:00             1
+2022-06-29 21:38:06.506806+00:00 2022-06-29 21:38:43.506806784+00:00             2</msg>
+<msg timestamp="20220701 16:26:44.405" level="TRACE">The SummaryState sequence: ['offline', 'standby', 'disabled', 'enabled'] should match ['offline', 'standby', 'disabled', 'enabled']</msg>
+<msg timestamp="20220701 16:26:44.411" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:43.486" endtime="20220701 16:26:44.411"/>
+</kw>
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>OCPS</arg>
+<arg>${topic_1}</arg>
+<arg>${topic_2}</arg>
+<arg>${time_window}</arg>
+<arg>index=2</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220701 16:26:44.412" level="TRACE">Arguments: [ 'OCPS' | 'logevent_summaryState' | 'command_disable' | 600 | index=2 ]</msg>
+<msg timestamp="20220701 16:26:44.413" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:44.697" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:44.699" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:44.985" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:44.987" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:45.114" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:45.246" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.OCPS.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:45.250" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:45.542" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220701 16:26:45.545" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:45.836" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220701 16:26:45.839" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220701 16:26:45.973" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220701 16:26:46.112" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.OCPS.command_disable" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220701 16:26:46.115" level="TRACE">logevent_summaryState was sent at 2022-07-01 16:19:06.773477888+00:00.</msg>
+<msg timestamp="20220701 16:26:46.115" level="TRACE">command_disable was sent at 2022-07-01 16:19:06.762415872+00:00.</msg>
+<msg timestamp="20220701 16:26:46.115" level="TRACE">The time difference is 0.011062 seconds.</msg>
+<msg timestamp="20220701 16:26:46.115" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220701 16:26:44.412" endtime="20220701 16:26:46.115"/>
+</kw>
+<tag>obsys2</tag>
+<tag>shutdown</tag>
+<status status="PASS" starttime="20220701 16:26:43.485" endtime="20220701 16:26:46.116"/>
+</test>
+<status status="PASS" starttime="20220701 16:26:35.542" endtime="20220701 16:26:46.117"/>
+</suite>
+<status status="FAIL" starttime="20220701 16:25:12.545" endtime="20220701 16:26:46.121"/>
+</suite>
+<statistics>
+<total>
+<stat pass="34" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="7" fail="0" skip="0">atcs</stat>
+<stat pass="3" fail="0" skip="0">comcam</stat>
+<stat pass="2" fail="0" skip="0">eas</stat>
+<stat pass="2" fail="0" skip="0">eas_ae</stat>
+<stat pass="4" fail="0" skip="0">latiss</stat>
+<stat pass="9" fail="1" skip="0">mtcs</stat>
+<stat pass="3" fail="0" skip="0">obsys1</stat>
+<stat pass="4" fail="0" skip="0">obsys2</stat>
+<stat pass="34" fail="1" skip="0">shutdown</stat>
+</tag>
+<suite>
+<stat pass="34" fail="1" skip="0" id="s1" name="Shutdown">Shutdown</stat>
+<stat pass="7" fail="0" skip="0" id="s1-s1" name="Verify ATCS Shutdown">Shutdown.Verify ATCS Shutdown</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s2" name="Verify ComCam Shutdown">Shutdown.Verify ComCam Shutdown</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s3" name="Verify EAS AE Shutdown">Shutdown.Verify EAS AE Shutdown</stat>
+<stat pass="2" fail="0" skip="0" id="s1-s4" name="Verify EAS Shutdown">Shutdown.Verify EAS Shutdown</stat>
+<stat pass="4" fail="0" skip="0" id="s1-s5" name="Verify LATISS Shutdown">Shutdown.Verify LATISS Shutdown</stat>
+<stat pass="9" fail="1" skip="0" id="s1-s6" name="Verify MTCS Shutdown">Shutdown.Verify MTCS Shutdown</stat>
+<stat pass="3" fail="0" skip="0" id="s1-s7" name="Verify ObsSys1 Shutdown">Shutdown.Verify ObsSys1 Shutdown</stat>
+<stat pass="4" fail="0" skip="0" id="s1-s8" name="Verify ObsSys2 Shutdown">Shutdown.Verify ObsSys2 Shutdown</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

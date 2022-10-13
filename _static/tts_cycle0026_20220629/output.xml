@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.8.13 on linux)" generated="20220629 20:46:27.311" rpa="false" schemaversion="3">
+<suite id="s1" name="Verify Camera Offline" source="/home/saluser/repos/robotframework_EFD/Offline/Verify_Camera_Offline.robot">
+<test id="s1-t1" name="Verify ATCamera Offline" line="16">
+<kw name="Verify Summary State" library="QueryEfd">
+<arg>${STATES}[offline]</arg>
+<arg>ATCamera</arg>
+<doc>Fails if the current State of the CSC does not match the
+expected_state.</doc>
+<msg timestamp="20220629 20:46:28.300" level="TRACE">Arguments: [ 4 | 'ATCamera' ]</msg>
+<msg timestamp="20220629 20:46:28.303" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:28.588" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:28.591" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:29.242" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:29.249" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:29.400" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:29.403" level="DEBUG">Using selector: EpollSelector</msg>
+<msg timestamp="20220629 20:46:29.553" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:29.562" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-06-29 15:03:20.942727+00:00 2022-06-29 15:03:57.942727168+00:00             4
+ATCamera in OFFLINE State
+Time of Summary State: 2022-06-29T15:03:57.942727</msg>
+<msg timestamp="20220629 20:46:29.562" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:28.300" endtime="20220629 20:46:29.562"/>
+</kw>
+<tag>latiss</tag>
+<tag>offline</tag>
+<status status="PASS" starttime="20220629 20:46:28.298" endtime="20220629 20:46:29.563"/>
+</test>
+<test id="s1-t2" name="Verify ATCamera SoftwareVersions" line="20">
+<kw name="Verify Software Versions" library="QueryEfd">
+<arg>ATCamera</arg>
+<doc>Fails if the dependency versions used to build the package
+do not match the expected versions.</doc>
+<msg timestamp="20220629 20:46:29.565" level="TRACE">Arguments: [ 'ATCamera' ]</msg>
+<msg timestamp="20220629 20:46:29.566" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:29.853" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:29.856" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:30.163" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:30.166" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:30.300" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:30.441" level="DEBUG">200: SELECT private_sndStamp, cscVersion, openSpliceVersion, salVersion, xmlVersion FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_softwareVersions" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:30.458" level="TRACE">dataframe:
+                                                    private_sndStamp      cscVersion openSpliceVersion salVersion xmlVersion
+2022-06-29 15:03:18.326435+00:00 2022-06-29 15:03:55.326435328+00:00  2.7.0-SNAPSHOT          6.10.4p2      7.0.0     12.0.0</msg>
+<msg timestamp="20220629 20:46:30.458" level="TRACE">Expected: SALVersion: 7.0.0, XMLVersion: 12.0.0, OSPLVersion: 6.10.4p2 
+  Actual: SALVersion: 7.0.0, XMLVersion: 12.0.0, OSPLVersion: 6.10.4p2, CSCVersion: 2.7.0-SNAPSHOT</msg>
+<msg timestamp="20220629 20:46:30.459" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:29.564" endtime="20220629 20:46:30.459"/>
+</kw>
+<tag>latiss</tag>
+<tag>offline</tag>
+<tag>software_versions</tag>
+<status status="PASS" starttime="20220629 20:46:29.564" endtime="20220629 20:46:30.459"/>
+</test>
+<test id="s1-t3" name="Verify ATCamera SoftwareVersions timing" line="24">
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATCamera</arg>
+<arg>logevent_summaryState</arg>
+<arg>logevent_softwareVersions</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220629 20:46:30.461" level="TRACE">Arguments: [ 'ATCamera' | 'logevent_summaryState' | 'logevent_softwareVersions' | 600 ]</msg>
+<msg timestamp="20220629 20:46:30.463" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:30.755" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:30.760" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:31.053" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:31.058" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:31.196" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:31.332" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:31.339" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:31.624" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:31.627" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:31.920" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:31.923" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:32.062" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:32.202" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_softwareVersions" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:32.205" level="TRACE">logevent_summaryState was sent at 1656515037.0.</msg>
+<msg timestamp="20220629 20:46:32.205" level="TRACE">logevent_softwareVersions was sent at 1656515035.0.</msg>
+<msg timestamp="20220629 20:46:32.205" level="TRACE">The time difference is 2.0 seconds.</msg>
+<msg timestamp="20220629 20:46:32.205" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:30.461" endtime="20220629 20:46:32.205"/>
+</kw>
+<tag>latiss</tag>
+<tag>offline</tag>
+<tag>software_versions</tag>
+<tag>timing</tag>
+<status status="PASS" starttime="20220629 20:46:30.460" endtime="20220629 20:46:32.206"/>
+</test>
+<test id="s1-t4" name="Verify ATCamera OfflineDetailedStates" line="28">
+<kw name="Log Many" library="BuiltIn">
+<arg>ATCamera</arg>
+<arg>${offdet_topic}</arg>
+<arg>${offdet_fields}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:32.207" level="TRACE">Arguments: [ 'ATCamera' | '${offdet_topic}' | '${offdet_fields}' ]</msg>
+<msg timestamp="20220629 20:46:32.208" level="INFO">ATCamera</msg>
+<msg timestamp="20220629 20:46:32.209" level="INFO">logevent_offlineDetailedState</msg>
+<msg timestamp="20220629 20:46:32.209" level="INFO">['"private_sndStamp"', '"substate"']</msg>
+<msg timestamp="20220629 20:46:32.209" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:32.207" endtime="20220629 20:46:32.209"/>
+</kw>
+<kw name="Get Recent Samples" library="QueryEfd">
+<var>${output}</var>
+<arg>ATCamera</arg>
+<arg>${offdet_topic}</arg>
+<arg>${offdet_fields}</arg>
+<arg>2</arg>
+<doc>Returns the &lt;num&gt; most recent samples of the given topic and
+fields for the given CSC.</doc>
+<msg timestamp="20220629 20:46:32.210" level="TRACE">Arguments: [ 'ATCamera' | 'logevent_offlineDetailedState' | ['"private_sndStamp"', '"substate"'] | 2 ]</msg>
+<msg timestamp="20220629 20:46:32.211" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:32.495" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:32.498" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:32.775" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:32.777" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:32.910" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:33.046" level="DEBUG">200: SELECT "private_sndStamp", "substate" FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_offlineDetailedState" GROUP BY * ORDER BY DESC LIMIT 2</msg>
+<msg timestamp="20220629 20:46:33.050" level="TRACE">Return:                                                     private_sndStamp  substate
+2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1
+2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2</msg>
+<msg timestamp="20220629 20:46:33.060" level="INFO">${output} =                                                     private_sndStamp  substate
+2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1
+2022-06-29 15:03:20.943899+00:00 2022-06-2...</msg>
+<status status="PASS" starttime="20220629 20:46:32.210" endtime="20220629 20:46:33.061"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${output}</var>
+<arg>${output}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220629 20:46:33.064" level="TRACE">Arguments: [                                                     private_sndStamp  substate
+2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1
+2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2 ]</msg>
+<msg timestamp="20220629 20:46:33.069" level="DEBUG">Argument types are:
+&lt;class 'pandas.core.frame.DataFrame'&gt;</msg>
+<msg timestamp="20220629 20:46:33.073" level="TRACE">Return: '                                                    private_sndStamp  substate\n2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1\n2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2'</msg>
+<msg timestamp="20220629 20:46:33.073" level="INFO">${output} =                                                     private_sndStamp  substate
+2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1
+2022-06-29 15:03:20.943899+00:00 2022-06-2...</msg>
+<status status="PASS" starttime="20220629 20:46:33.062" endtime="20220629 20:46:33.073"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220629 20:46:33.073" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1\n2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2' ]</msg>
+<msg timestamp="20220629 20:46:33.073" level="INFO">                                                    private_sndStamp  substate
+2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1
+2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2</msg>
+<msg timestamp="20220629 20:46:33.073" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.073" endtime="20220629 20:46:33.074"/>
+</kw>
+<kw name="Should Not Contain" library="BuiltIn">
+<arg>${output}</arg>
+<arg>Empty DataFrame</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<msg timestamp="20220629 20:46:33.074" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1\n2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2' | 'Empty DataFrame' ]</msg>
+<msg timestamp="20220629 20:46:33.074" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.074" endtime="20220629 20:46:33.074"/>
+</kw>
+<kw name="Get Line" library="String">
+<var>${first}</var>
+<arg>${output}</arg>
+<arg>1</arg>
+<doc>Returns the specified line from the given ``string``.</doc>
+<msg timestamp="20220629 20:46:33.075" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1\n2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2' | '1' ]</msg>
+<msg timestamp="20220629 20:46:33.075" level="TRACE">Return: '2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1'</msg>
+<msg timestamp="20220629 20:46:33.075" level="INFO">${first} = 2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1</msg>
+<status status="PASS" starttime="20220629 20:46:33.074" endtime="20220629 20:46:33.075"/>
+</kw>
+<kw name="Split String" library="String">
+<var>@{first_event}</var>
+<arg>${first}</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20220629 20:46:33.075" level="TRACE">Arguments: [ '2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1' ]</msg>
+<msg timestamp="20220629 20:46:33.076" level="TRACE">Return: ['2022-06-29',
+ '15:03:40.584516+00:00',
+ '2022-06-29',
+ '15:04:17.584516096+00:00',
+ '1']</msg>
+<msg timestamp="20220629 20:46:33.076" level="INFO">@{first_event} = [ 2022-06-29 | 15:03:40.584516+00:00 | 2022-06-29 | 15:04:17.584516096+00:00 | 1 ]</msg>
+<status status="PASS" starttime="20220629 20:46:33.075" endtime="20220629 20:46:33.076"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>${first_event}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:33.076" level="TRACE">Arguments: [ '${first_event}' ]</msg>
+<msg timestamp="20220629 20:46:33.076" level="INFO">['2022-06-29', '15:03:40.584516+00:00', '2022-06-29', '15:04:17.584516096+00:00', '1']</msg>
+<msg timestamp="20220629 20:46:33.076" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.076" endtime="20220629 20:46:33.076"/>
+</kw>
+<kw name="Get Line" library="String">
+<var>${second}</var>
+<arg>${output}</arg>
+<arg>2</arg>
+<doc>Returns the specified line from the given ``string``.</doc>
+<msg timestamp="20220629 20:46:33.077" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:03:40.584516+00:00 2022-06-29 15:04:17.584516096+00:00         1\n2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2' | '2' ]</msg>
+<msg timestamp="20220629 20:46:33.077" level="TRACE">Return: '2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2'</msg>
+<msg timestamp="20220629 20:46:33.077" level="INFO">${second} = 2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2</msg>
+<status status="PASS" starttime="20220629 20:46:33.076" endtime="20220629 20:46:33.079"/>
+</kw>
+<kw name="Split String" library="String">
+<var>@{second_event}</var>
+<arg>${second}</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20220629 20:46:33.081" level="TRACE">Arguments: [ '2022-06-29 15:03:20.943899+00:00 2022-06-29 15:03:57.943899648+00:00         2' ]</msg>
+<msg timestamp="20220629 20:46:33.081" level="TRACE">Return: ['2022-06-29',
+ '15:03:20.943899+00:00',
+ '2022-06-29',
+ '15:03:57.943899648+00:00',
+ '2']</msg>
+<msg timestamp="20220629 20:46:33.081" level="INFO">@{second_event} = [ 2022-06-29 | 15:03:20.943899+00:00 | 2022-06-29 | 15:03:57.943899648+00:00 | 2 ]</msg>
+<status status="PASS" starttime="20220629 20:46:33.080" endtime="20220629 20:46:33.081"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>${second_event}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:33.082" level="TRACE">Arguments: [ '${second_event}' ]</msg>
+<msg timestamp="20220629 20:46:33.082" level="INFO">['2022-06-29', '15:03:20.943899+00:00', '2022-06-29', '15:03:57.943899648+00:00', '2']</msg>
+<msg timestamp="20220629 20:46:33.082" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.082" endtime="20220629 20:46:33.082"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>First Substate: ${first_event}[4]</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:33.083" level="TRACE">Arguments: [ 'First Substate: ${first_event}[4]' ]</msg>
+<msg timestamp="20220629 20:46:33.083" level="INFO">First Substate: 1</msg>
+<msg timestamp="20220629 20:46:33.083" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.083" endtime="20220629 20:46:33.083"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${first_event}[4]</arg>
+<arg>1</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220629 20:46:33.084" level="TRACE">Arguments: [ '1' | '1' ]</msg>
+<msg timestamp="20220629 20:46:33.084" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<msg timestamp="20220629 20:46:33.084" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.083" endtime="20220629 20:46:33.084"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>Second Substate: ${second_event}[4]</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:33.084" level="TRACE">Arguments: [ 'Second Substate: ${second_event}[4]' ]</msg>
+<msg timestamp="20220629 20:46:33.085" level="INFO">Second Substate: 2</msg>
+<msg timestamp="20220629 20:46:33.085" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.084" endtime="20220629 20:46:33.085"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${second_event}[4]</arg>
+<arg>2</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220629 20:46:33.085" level="TRACE">Arguments: [ '2' | '2' ]</msg>
+<msg timestamp="20220629 20:46:33.085" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<msg timestamp="20220629 20:46:33.085" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.085" endtime="20220629 20:46:33.085"/>
+</kw>
+<tag>detailed_states</tag>
+<tag>latiss</tag>
+<tag>offline</tag>
+<status status="PASS" starttime="20220629 20:46:32.207" endtime="20220629 20:46:33.086"/>
+</test>
+<test id="s1-t5" name="Verify ATCamera OfflineDetailedStates timing" line="46">
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>ATCamera</arg>
+<arg>logevent_summaryState</arg>
+<arg>${offdet_topic}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220629 20:46:33.093" level="TRACE">Arguments: [ 'ATCamera' | 'logevent_summaryState' | 'logevent_offlineDetailedState' | 600 ]</msg>
+<msg timestamp="20220629 20:46:33.095" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:33.378" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:33.381" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:33.662" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:33.666" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:33.801" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:33.938" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:33.942" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:34.220" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:34.224" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:34.515" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:34.518" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:34.649" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:34.789" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.ATCamera.logevent_offlineDetailedState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:34.798" level="TRACE">logevent_summaryState was sent at 1656515037.0.</msg>
+<msg timestamp="20220629 20:46:34.798" level="TRACE">logevent_offlineDetailedState was sent at 1656515057.0.</msg>
+<msg timestamp="20220629 20:46:34.798" level="TRACE">The time difference is 20.0 seconds.</msg>
+<msg timestamp="20220629 20:46:34.798" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:33.093" endtime="20220629 20:46:34.798"/>
+</kw>
+<tag>detailed_states</tag>
+<tag>latiss</tag>
+<tag>offline</tag>
+<tag>timing</tag>
+<status status="PASS" starttime="20220629 20:46:33.090" endtime="20220629 20:46:34.799"/>
+</test>
+<test id="s1-t6" name="Verify CCCamera Offline" line="50">
+<kw name="Verify Summary State" library="QueryEfd">
+<arg>${STATES}[offline]</arg>
+<arg>CCCamera</arg>
+<doc>Fails if the current State of the CSC does not match the
+expected_state.</doc>
+<msg timestamp="20220629 20:46:34.805" level="TRACE">Arguments: [ 4 | 'CCCamera' ]</msg>
+<msg timestamp="20220629 20:46:34.808" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:35.090" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:35.094" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:35.375" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:35.378" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:35.515" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:35.653" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:35.666" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-06-29 14:59:45.011061+00:00 2022-06-29 15:00:22.011060992+00:00             4
+CCCamera in OFFLINE State
+Time of Summary State: 2022-06-29T15:00:22.011060</msg>
+<msg timestamp="20220629 20:46:35.666" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:34.804" endtime="20220629 20:46:35.666"/>
+</kw>
+<tag>comcam</tag>
+<tag>offline</tag>
+<status status="PASS" starttime="20220629 20:46:34.801" endtime="20220629 20:46:35.666"/>
+</test>
+<test id="s1-t7" name="Verify CCCamera SoftwareVersions" line="54">
+<kw name="Verify Software Versions" library="QueryEfd">
+<arg>CCCamera</arg>
+<doc>Fails if the dependency versions used to build the package
+do not match the expected versions.</doc>
+<msg timestamp="20220629 20:46:35.669" level="TRACE">Arguments: [ 'CCCamera' ]</msg>
+<msg timestamp="20220629 20:46:35.671" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:35.962" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:35.965" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:36.244" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:36.246" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:36.387" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:36.526" level="DEBUG">200: SELECT private_sndStamp, cscVersion, openSpliceVersion, salVersion, xmlVersion FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_softwareVersions" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:36.538" level="TRACE">dataframe:
+                                                    private_sndStamp      cscVersion openSpliceVersion salVersion xmlVersion
+2022-06-29 14:56:38.974097+00:00 2022-06-29 14:57:15.974097152+00:00  2.7.0-SNAPSHOT          6.10.4p2      7.0.0     12.0.0</msg>
+<msg timestamp="20220629 20:46:36.538" level="TRACE">Expected: SALVersion: 7.0.0, XMLVersion: 12.0.0, OSPLVersion: 6.10.4p2 
+  Actual: SALVersion: 7.0.0, XMLVersion: 12.0.0, OSPLVersion: 6.10.4p2, CSCVersion: 2.7.0-SNAPSHOT</msg>
+<msg timestamp="20220629 20:46:36.538" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:35.669" endtime="20220629 20:46:36.538"/>
+</kw>
+<tag>comcam</tag>
+<tag>offline</tag>
+<tag>software_versions</tag>
+<status status="PASS" starttime="20220629 20:46:35.668" endtime="20220629 20:46:36.539"/>
+</test>
+<test id="s1-t8" name="Verify CCCamera SoftwareVersions timing" line="58">
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>CCCamera</arg>
+<arg>logevent_summaryState</arg>
+<arg>logevent_softwareVersions</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220629 20:46:36.545" level="TRACE">Arguments: [ 'CCCamera' | 'logevent_summaryState' | 'logevent_softwareVersions' | 600 ]</msg>
+<msg timestamp="20220629 20:46:36.546" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:36.820" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:36.823" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:37.105" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:37.107" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:37.248" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:37.389" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:37.395" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:37.688" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:37.692" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:37.970" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:37.978" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:38.118" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:38.259" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_softwareVersions" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:38.263" level="TRACE">logevent_summaryState was sent at 1656514822.0.</msg>
+<msg timestamp="20220629 20:46:38.263" level="TRACE">logevent_softwareVersions was sent at 1656514635.0.</msg>
+<msg timestamp="20220629 20:46:38.263" level="TRACE">The time difference is 187.0 seconds.</msg>
+<msg timestamp="20220629 20:46:38.263" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:36.544" endtime="20220629 20:46:38.263"/>
+</kw>
+<tag>comcam</tag>
+<tag>offline</tag>
+<tag>software_versions</tag>
+<tag>timing</tag>
+<status status="PASS" starttime="20220629 20:46:36.542" endtime="20220629 20:46:38.264"/>
+</test>
+<test id="s1-t9" name="Verify CCCamera OfflineDetailedStates" line="62">
+<kw name="Log Many" library="BuiltIn">
+<arg>CCCamera</arg>
+<arg>${offdet_topic}</arg>
+<arg>${offdet_fields}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:38.265" level="TRACE">Arguments: [ 'CCCamera' | '${offdet_topic}' | '${offdet_fields}' ]</msg>
+<msg timestamp="20220629 20:46:38.266" level="INFO">CCCamera</msg>
+<msg timestamp="20220629 20:46:38.266" level="INFO">logevent_offlineDetailedState</msg>
+<msg timestamp="20220629 20:46:38.266" level="INFO">['"private_sndStamp"', '"substate"']</msg>
+<msg timestamp="20220629 20:46:38.266" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:38.265" endtime="20220629 20:46:38.266"/>
+</kw>
+<kw name="Get Recent Samples" library="QueryEfd">
+<var>${output}</var>
+<arg>CCCamera</arg>
+<arg>${offdet_topic}</arg>
+<arg>${offdet_fields}</arg>
+<arg>2</arg>
+<doc>Returns the &lt;num&gt; most recent samples of the given topic and
+fields for the given CSC.</doc>
+<msg timestamp="20220629 20:46:38.268" level="TRACE">Arguments: [ 'CCCamera' | 'logevent_offlineDetailedState' | ['"private_sndStamp"', '"substate"'] | 2 ]</msg>
+<msg timestamp="20220629 20:46:38.270" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:38.551" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:38.555" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:38.831" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:38.836" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:38.977" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:39.122" level="DEBUG">200: SELECT "private_sndStamp", "substate" FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_offlineDetailedState" GROUP BY * ORDER BY DESC LIMIT 2</msg>
+<msg timestamp="20220629 20:46:39.127" level="TRACE">Return:                                                     private_sndStamp  substate
+2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1
+2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2</msg>
+<msg timestamp="20220629 20:46:39.136" level="INFO">${output} =                                                     private_sndStamp  substate
+2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1
+2022-06-29 14:59:45.011723+00:00 2022-06-2...</msg>
+<status status="PASS" starttime="20220629 20:46:38.267" endtime="20220629 20:46:39.136"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${output}</var>
+<arg>${output}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20220629 20:46:39.144" level="TRACE">Arguments: [                                                     private_sndStamp  substate
+2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1
+2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2 ]</msg>
+<msg timestamp="20220629 20:46:39.152" level="DEBUG">Argument types are:
+&lt;class 'pandas.core.frame.DataFrame'&gt;</msg>
+<msg timestamp="20220629 20:46:39.157" level="TRACE">Return: '                                                    private_sndStamp  substate\n2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1\n2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2'</msg>
+<msg timestamp="20220629 20:46:39.157" level="INFO">${output} =                                                     private_sndStamp  substate
+2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1
+2022-06-29 14:59:45.011723+00:00 2022-06-2...</msg>
+<status status="PASS" starttime="20220629 20:46:39.137" endtime="20220629 20:46:39.157"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${output}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220629 20:46:39.158" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1\n2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2' ]</msg>
+<msg timestamp="20220629 20:46:39.158" level="INFO">                                                    private_sndStamp  substate
+2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1
+2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2</msg>
+<msg timestamp="20220629 20:46:39.158" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.158" endtime="20220629 20:46:39.158"/>
+</kw>
+<kw name="Should Not Contain" library="BuiltIn">
+<arg>${output}</arg>
+<arg>Empty DataFrame</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<msg timestamp="20220629 20:46:39.159" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1\n2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2' | 'Empty DataFrame' ]</msg>
+<msg timestamp="20220629 20:46:39.159" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.159" endtime="20220629 20:46:39.159"/>
+</kw>
+<kw name="Get Line" library="String">
+<var>${first}</var>
+<arg>${output}</arg>
+<arg>1</arg>
+<doc>Returns the specified line from the given ``string``.</doc>
+<msg timestamp="20220629 20:46:39.160" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1\n2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2' | '1' ]</msg>
+<msg timestamp="20220629 20:46:39.160" level="TRACE">Return: '2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1'</msg>
+<msg timestamp="20220629 20:46:39.160" level="INFO">${first} = 2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1</msg>
+<status status="PASS" starttime="20220629 20:46:39.159" endtime="20220629 20:46:39.160"/>
+</kw>
+<kw name="Split String" library="String">
+<var>@{first_event}</var>
+<arg>${first}</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20220629 20:46:39.161" level="TRACE">Arguments: [ '2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1' ]</msg>
+<msg timestamp="20220629 20:46:39.161" level="TRACE">Return: ['2022-06-29',
+ '15:00:21.126265+00:00',
+ '2022-06-29',
+ '15:00:58.126265856+00:00',
+ '1']</msg>
+<msg timestamp="20220629 20:46:39.161" level="INFO">@{first_event} = [ 2022-06-29 | 15:00:21.126265+00:00 | 2022-06-29 | 15:00:58.126265856+00:00 | 1 ]</msg>
+<status status="PASS" starttime="20220629 20:46:39.160" endtime="20220629 20:46:39.161"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>${first_event}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:39.161" level="TRACE">Arguments: [ '${first_event}' ]</msg>
+<msg timestamp="20220629 20:46:39.162" level="INFO">['2022-06-29', '15:00:21.126265+00:00', '2022-06-29', '15:00:58.126265856+00:00', '1']</msg>
+<msg timestamp="20220629 20:46:39.162" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.161" endtime="20220629 20:46:39.162"/>
+</kw>
+<kw name="Get Line" library="String">
+<var>${second}</var>
+<arg>${output}</arg>
+<arg>2</arg>
+<doc>Returns the specified line from the given ``string``.</doc>
+<msg timestamp="20220629 20:46:39.164" level="TRACE">Arguments: [ '                                                    private_sndStamp  substate\n2022-06-29 15:00:21.126265+00:00 2022-06-29 15:00:58.126265856+00:00         1\n2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2' | '2' ]</msg>
+<msg timestamp="20220629 20:46:39.164" level="TRACE">Return: '2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2'</msg>
+<msg timestamp="20220629 20:46:39.165" level="INFO">${second} = 2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2</msg>
+<status status="PASS" starttime="20220629 20:46:39.163" endtime="20220629 20:46:39.165"/>
+</kw>
+<kw name="Split String" library="String">
+<var>@{second_event}</var>
+<arg>${second}</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20220629 20:46:39.167" level="TRACE">Arguments: [ '2022-06-29 14:59:45.011723+00:00 2022-06-29 15:00:22.011723776+00:00         2' ]</msg>
+<msg timestamp="20220629 20:46:39.167" level="TRACE">Return: ['2022-06-29',
+ '14:59:45.011723+00:00',
+ '2022-06-29',
+ '15:00:22.011723776+00:00',
+ '2']</msg>
+<msg timestamp="20220629 20:46:39.168" level="INFO">@{second_event} = [ 2022-06-29 | 14:59:45.011723+00:00 | 2022-06-29 | 15:00:22.011723776+00:00 | 2 ]</msg>
+<status status="PASS" starttime="20220629 20:46:39.166" endtime="20220629 20:46:39.168"/>
+</kw>
+<kw name="Log Many" library="BuiltIn">
+<arg>${second_event}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<msg timestamp="20220629 20:46:39.169" level="TRACE">Arguments: [ '${second_event}' ]</msg>
+<msg timestamp="20220629 20:46:39.170" level="INFO">['2022-06-29', '14:59:45.011723+00:00', '2022-06-29', '15:00:22.011723776+00:00', '2']</msg>
+<msg timestamp="20220629 20:46:39.170" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.169" endtime="20220629 20:46:39.170"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>First Substate: ${first_event}[4]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220629 20:46:39.171" level="TRACE">Arguments: [ 'First Substate: 1' ]</msg>
+<msg timestamp="20220629 20:46:39.172" level="INFO">First Substate: 1</msg>
+<msg timestamp="20220629 20:46:39.178" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.170" endtime="20220629 20:46:39.178"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${first_event}[4]</arg>
+<arg>1</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220629 20:46:39.178" level="TRACE">Arguments: [ '1' | '1' ]</msg>
+<msg timestamp="20220629 20:46:39.179" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<msg timestamp="20220629 20:46:39.179" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.178" endtime="20220629 20:46:39.179"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Second Substate: ${second_event}[4]</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220629 20:46:39.180" level="TRACE">Arguments: [ 'Second Substate: 2' ]</msg>
+<msg timestamp="20220629 20:46:39.180" level="INFO">Second Substate: 2</msg>
+<msg timestamp="20220629 20:46:39.180" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.179" endtime="20220629 20:46:39.180"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${second_event}[4]</arg>
+<arg>2</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20220629 20:46:39.180" level="TRACE">Arguments: [ '2' | '2' ]</msg>
+<msg timestamp="20220629 20:46:39.180" level="DEBUG">Argument types are:
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;</msg>
+<msg timestamp="20220629 20:46:39.180" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.180" endtime="20220629 20:46:39.180"/>
+</kw>
+<tag>comcam</tag>
+<tag>offline</tag>
+<status status="PASS" starttime="20220629 20:46:38.264" endtime="20220629 20:46:39.181"/>
+</test>
+<test id="s1-t10" name="Verify CCCamera OfflineDetailedStates timing" line="80">
+<kw name="Verify Time Delta" library="QueryEfd">
+<arg>CCCamera</arg>
+<arg>logevent_summaryState</arg>
+<arg>${offdet_topic}</arg>
+<arg>${time_window}</arg>
+<doc>Fails if the difference between the publish times for the two given
+topics is greater than the given time_window..</doc>
+<msg timestamp="20220629 20:46:39.184" level="TRACE">Arguments: [ 'CCCamera' | 'logevent_summaryState' | 'logevent_offlineDetailedState' | 600 ]</msg>
+<msg timestamp="20220629 20:46:39.185" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:39.471" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:39.475" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:39.769" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:39.778" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:39.915" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:40.054" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:40.058" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:40.348" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220629 20:46:40.352" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:40.635" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220629 20:46:40.638" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220629 20:46:40.779" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220629 20:46:40.914" level="DEBUG">200: SELECT private_sndStamp FROM "efd"."autogen"."lsst.sal.CCCamera.logevent_offlineDetailedState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220629 20:46:40.917" level="TRACE">logevent_summaryState was sent at 1656514822.0.</msg>
+<msg timestamp="20220629 20:46:40.917" level="TRACE">logevent_offlineDetailedState was sent at 1656514858.0.</msg>
+<msg timestamp="20220629 20:46:40.917" level="TRACE">The time difference is 36.0 seconds.</msg>
+<msg timestamp="20220629 20:46:40.917" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220629 20:46:39.183" endtime="20220629 20:46:40.918"/>
+</kw>
+<tag>comcam</tag>
+<tag>detailed_states</tag>
+<tag>offline</tag>
+<tag>timing</tag>
+<status status="PASS" starttime="20220629 20:46:39.182" endtime="20220629 20:46:40.918"/>
+</test>
+<status status="PASS" starttime="20220629 20:46:27.313" endtime="20220629 20:46:40.920"/>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="5" fail="0" skip="0">comcam</stat>
+<stat pass="3" fail="0" skip="0">detailed_states</stat>
+<stat pass="5" fail="0" skip="0">latiss</stat>
+<stat pass="10" fail="0" skip="0">offline</stat>
+<stat pass="4" fail="0" skip="0">software_versions</stat>
+<stat pass="4" fail="0" skip="0">timing</stat>
+</tag>
+<suite>
+<stat pass="10" fail="0" skip="0" id="s1" name="Verify Camera Offline">Verify Camera Offline</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
