@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.8.13 on linux)" generated="20220630 16:14:33.864" rpa="false" schemaversion="3">
+<suite id="s1" name="AT_Stop" source="/home/saluser/repos/robotframework_EFD/Verify_AT_Stop.robot">
+<test id="s1-t1" name="Verify ATDome logevent_azimuthInPosition" line="18">
+<kw name="Verify Topic Attribute" library="QueryEfd">
+<arg>ATDome</arg>
+<arg>logevent_azimuthInPosition</arg>
+<arg>${azimuthInPosition}</arg>
+<arg>${in_pos_expected}</arg>
+<doc>Fails if the values of the given field attributes do not match
+the expected_values.</doc>
+<msg timestamp="20220630 16:14:34.468" level="TRACE">Arguments: [ 'ATDome' | 'logevent_azimuthInPosition' | ['inPosition'] | ['False'] ]</msg>
+<msg timestamp="20220630 16:14:34.469" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:34.666" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220630 16:14:34.668" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:34.859" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220630 16:14:34.862" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:34.895" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220630 16:14:34.896" level="DEBUG">Using selector: EpollSelector</msg>
+<msg timestamp="20220630 16:14:34.917" level="DEBUG">200: SELECT inPosition FROM "efd"."autogen"."lsst.sal.ATDome.logevent_azimuthInPosition" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220630 16:14:34.924" level="TRACE">dataframe:
+                                  inPosition
+2022-06-30 16:05:56.019646+00:00       False</msg>
+<msg timestamp="20220630 16:14:34.924" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220630 16:14:34.467" endtime="20220630 16:14:34.924"/>
+</kw>
+<tag>auxtel_stop</tag>
+<status status="PASS" starttime="20220630 16:14:34.466" endtime="20220630 16:14:34.924"/>
+</test>
+<test id="s1-t2" name="Verify ATDomeTrajectory Disabled" line="22">
+<kw name="Verify Summary State" library="QueryEfd">
+<arg>${STATES}[disabled]</arg>
+<arg>ATDomeTrajectory</arg>
+<doc>Fails if the current State of the CSC does not match the
+expected_state.</doc>
+<msg timestamp="20220630 16:14:34.926" level="TRACE">Arguments: [ 1 | 'ATDomeTrajectory' ]</msg>
+<msg timestamp="20220630 16:14:34.927" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.119" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220630 16:14:35.121" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.313" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220630 16:14:35.315" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.332" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220630 16:14:35.346" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATDomeTrajectory.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220630 16:14:35.353" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-06-30 16:05:56.015780+00:00 2022-06-30 16:06:33.015780096+00:00             1
+ATDomeTrajectory in DISABLED State
+Time of Summary State: 2022-06-30T16:06:33.015780</msg>
+<msg timestamp="20220630 16:14:35.353" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220630 16:14:34.926" endtime="20220630 16:14:35.353"/>
+</kw>
+<tag>auxtel_stop</tag>
+<status status="PASS" starttime="20220630 16:14:34.925" endtime="20220630 16:14:35.353"/>
+</test>
+<test id="s1-t3" name="Verify ATMCS logevent_atMountState" line="26">
+<kw name="Verify Topic Attribute" library="QueryEfd">
+<arg>ATMCS</arg>
+<arg>logevent_atMountState</arg>
+<arg>${atMountState}</arg>
+<arg>${states_expected}</arg>
+<doc>Fails if the values of the given field attributes do not match
+the expected_values.</doc>
+<msg timestamp="20220630 16:14:35.355" level="TRACE">Arguments: [ 'ATMCS' | 'logevent_atMountState' | ['state'] | ['8'] ]</msg>
+<msg timestamp="20220630 16:14:35.356" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.548" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220630 16:14:35.551" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.738" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220630 16:14:35.740" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.759" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220630 16:14:35.774" level="DEBUG">200: SELECT state FROM "efd"."autogen"."lsst.sal.ATMCS.logevent_atMountState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220630 16:14:35.778" level="TRACE">dataframe:
+                                  state
+2022-06-30 16:05:56.120801+00:00      8</msg>
+<msg timestamp="20220630 16:14:35.779" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220630 16:14:35.354" endtime="20220630 16:14:35.779"/>
+</kw>
+<tag>auxtel_stop</tag>
+<status status="PASS" starttime="20220630 16:14:35.354" endtime="20220630 16:14:35.779"/>
+</test>
+<test id="s1-t4" name="Verify ATMCS logevent_allAxesInPosition" line="30">
+<kw name="Verify Topic Attribute" library="QueryEfd">
+<arg>ATMCS</arg>
+<arg>logevent_allAxesInPosition</arg>
+<arg>${allAxesInPosition}</arg>
+<arg>${in_pos_expected}</arg>
+<doc>Fails if the values of the given field attributes do not match
+the expected_values.</doc>
+<msg timestamp="20220630 16:14:35.780" level="TRACE">Arguments: [ 'ATMCS' | 'logevent_allAxesInPosition' | ['inPosition'] | ['False'] ]</msg>
+<msg timestamp="20220630 16:14:35.781" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:35.973" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220630 16:14:35.975" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:36.166" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220630 16:14:36.169" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:36.187" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220630 16:14:36.202" level="DEBUG">200: SELECT inPosition FROM "efd"."autogen"."lsst.sal.ATMCS.logevent_allAxesInPosition" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220630 16:14:36.207" level="TRACE">dataframe:
+                                  inPosition
+2022-06-30 16:05:56.018106+00:00       False</msg>
+<msg timestamp="20220630 16:14:36.207" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220630 16:14:35.780" endtime="20220630 16:14:36.207"/>
+</kw>
+<tag>auxtel_stop</tag>
+<status status="PASS" starttime="20220630 16:14:35.779" endtime="20220630 16:14:36.208"/>
+</test>
+<test id="s1-t5" name="Verify ATPtg Fault" line="34">
+<kw name="Verify Summary State" library="QueryEfd">
+<arg>${STATES}[fault]</arg>
+<arg>ATPtg</arg>
+<doc>Fails if the current State of the CSC does not match the
+expected_state.</doc>
+<msg timestamp="20220630 16:14:36.210" level="TRACE">Arguments: [ 3 | 'ATPtg' ]</msg>
+<msg timestamp="20220630 16:14:36.212" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:36.402" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/ HTTP/1.1" 200 253</msg>
+<msg timestamp="20220630 16:14:36.404" level="DEBUG">Starting new HTTPS connection (1): roundtable.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:36.594" level="DEBUG">https://roundtable.lsst.codes:443 "GET /segwarides/creds/tucson_teststand_efd HTTP/1.1" 200 195</msg>
+<msg timestamp="20220630 16:14:36.596" level="DEBUG">Starting new HTTPS connection (1): influxdb-tucson-teststand-efd.lsst.codes:443</msg>
+<msg timestamp="20220630 16:14:36.614" level="DEBUG">https://influxdb-tucson-teststand-efd.lsst.codes:443 "GET /health HTTP/1.1" 200 106</msg>
+<msg timestamp="20220630 16:14:36.629" level="DEBUG">200: SELECT private_sndStamp, summaryState FROM "efd"."autogen"."lsst.sal.ATPtg.logevent_summaryState" GROUP BY * ORDER BY DESC LIMIT 1</msg>
+<msg timestamp="20220630 16:14:36.635" level="TRACE">dataframe:
+                                                    private_sndStamp  summaryState
+2022-06-30 16:05:56.090793+00:00 2022-06-30 16:06:33.090793472+00:00             3
+ATPtg in FAULT State
+Time of Summary State: 2022-06-30T16:06:33.090793</msg>
+<msg timestamp="20220630 16:14:36.635" level="TRACE">Return: None</msg>
+<status status="PASS" starttime="20220630 16:14:36.209" endtime="20220630 16:14:36.635"/>
+</kw>
+<tag>auxtel_stop</tag>
+<status status="PASS" starttime="20220630 16:14:36.208" endtime="20220630 16:14:36.636"/>
+</test>
+<status status="PASS" starttime="20220630 16:14:33.865" endtime="20220630 16:14:36.637"/>
+</suite>
+<statistics>
+<total>
+<stat pass="5" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="5" fail="0" skip="0">auxtel_stop</stat>
+</tag>
+<suite>
+<stat pass="5" fail="0" skip="0" id="s1" name="AT_Stop">AT_Stop</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
